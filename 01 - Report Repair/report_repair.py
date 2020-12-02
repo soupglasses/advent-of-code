@@ -1,11 +1,11 @@
-from itertools import permutations
+from itertools import combinations
 from math import prod
 
 with open('input.txt', 'r') as f:
     expenses = [int(line) for line in f.readlines()]
 
 def prod_from_sum(numbers: list, sum_: int, expr_len: int):
-    for expr_terms in permutations(numbers, expr_len):
+    for expr_terms in combinations(numbers, expr_len):
         if sum(expr_terms) == sum_:
             return prod(expr_terms)
 
