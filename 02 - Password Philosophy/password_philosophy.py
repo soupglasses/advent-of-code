@@ -1,7 +1,7 @@
 import re
 
 pattern = re.compile(
-    '(?P<low>^\d+)-(?P<high>\d+) (?P<letter>\w+): (?P<secret>.+)'
+    '(?P<low>^\d+)-(?P<high>\d+) (?P<letter>\w): (?P<secret>.+)'
 )
 
 with open('input.txt', 'r') as f:
