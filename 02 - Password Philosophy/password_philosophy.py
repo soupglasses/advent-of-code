@@ -1,9 +1,6 @@
 import re
 
-pattern = re.compile(
-    '(^\d+)-(\d+) (\w): (.+)',
-    re.MULTILINE
-)
+pattern = re.compile('(^\d+)-(\d+) (\w): (.+)', re.MULTILINE)
 
 with open('input.txt', 'r') as f:
     passwords = pattern.findall(f.read())
