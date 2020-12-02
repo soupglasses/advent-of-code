@@ -2,7 +2,7 @@ from itertools import combinations
 from math import prod
 
 with open('input.txt', 'r') as f:
-    expenses = [int(line) for line in f.readlines()]
+    expenses = [int(line) for line in f.read().splitlines()]
 
 def prod_from_sum(numbers: list, sum_: int, expr_len: int):
     for expr_terms in combinations(numbers, expr_len):
