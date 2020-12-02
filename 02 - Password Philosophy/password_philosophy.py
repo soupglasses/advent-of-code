@@ -1,26 +1,24 @@
 import re
 
 pattern = re.compile(
-    '(?P<low>^\d+)-(?P<high>\d+) (?P<letter>\w): (?P<secret>.+)'
+    '(^\d+)-(\d+) (\w): (.+)',
+    re.MULTILINE
 )
 
 with open('input.txt', 'r') as f:
-    passwords = []
-    for line in f.read().splitlines():
-        match = re.match(pattern, line)
-        passwords.append(match.groupdict())
+    passwords = pattern.findall(f.read())
 
-def valid_password_by_letters(low: str, high: str, letter: str, secret: str) -> bool:
-    low, high = int(low), int(high)
-    return low <= secret.count(letter) <= high
+def valid_password_by_letters(low: int, high: int, letter: str, password: str) -> bool:
+    return low <= password.count(letter) <= high
 
-def valid_password_by_pos(low:str, high: str, letter: str, secret: str) -> bool:
-    low, high = int(low)-1, int(high)-1
-    return (secret[low] == letter) != (secret[high] == letter)
+def valid_password_by_pos(low: int, high: int, letter: str, password: str) -> bool:
+    return (password[low-1] == letter) != (password[high-1] == letter)
 
 print("Q1:", "How many passwords are valid according to their policies?")
-print("A1:", sum(valid_password_by_letters(**password) for password in passwords))
+print("A1:", sum(valid_password_by_letters(int(low), int(high), letter, password)
+                 for low, high, letter, password in passwords))
 
 print("Q2:", "How many passwords are valid according to the new",
       "interpretation of the policies?")
-print("A2:", sum(valid_password_by_pos(**password) for password in passwords))
+print("A2:", sum(valid_password_by_pos(int(low), int(high), letter, password)
+                 for low, high, letter, password in passwords))
