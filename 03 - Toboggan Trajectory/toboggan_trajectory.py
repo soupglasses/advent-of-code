@@ -8,13 +8,13 @@ with open('input.txt', 'r') as f:
 def count_trees(grid: list, right: int, down: int) -> int:
     trees = 0
     width, height = len(grid[0]), len(grid)
-    for pos_down, pos_right in zip(range(0, height, down), range(0, height*right, right)):
-        hit = grid[pos_down % height][pos_right % width]
+    for pos in range(0, height, down):
+        hit = grid[pos][pos * right // down % width]
         if hit == '#':
             trees += 1
     return trees
 
-def prod_of_slopes(grid: list, slopes: list):
+def prod_of_slopes(grid: list, slopes: list) -> int:
     return prod(count_trees(grid, right, down) for right, down in slopes)
 
 print('A1:', count_trees(grid_map, 3, 1))
