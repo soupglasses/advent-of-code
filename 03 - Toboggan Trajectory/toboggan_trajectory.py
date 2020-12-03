@@ -14,7 +14,7 @@ def count_trees(grid: list, right: int, down: int) -> int:
             trees += 1
     return trees
 
-def prod_of_slopes(grid: list, slopes: list) -> int:
+def prod_from_slopes(grid: list, slopes: list) -> int:
     return prod(count_trees(grid, right, down) for right, down in slopes)
 
 print('Q1:', 'Starting at the top-left corner of your map and following',
@@ -23,4 +23,4 @@ print('A1:', count_trees(grid_map, 3, 1))
 
 print('Q2:', 'What do you get if you multiply together the number of trees',
       'encountered on each of the listed slopes?')
-print('A2:', prod_of_slopes(grid_map, SLOPES))
+print('A2:', prod_from_slopes(grid_map, SLOPES))
