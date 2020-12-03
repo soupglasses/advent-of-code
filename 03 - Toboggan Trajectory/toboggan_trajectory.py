@@ -1,6 +1,6 @@
 from math import prod
 
-SLOPES = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
+slopes = ((1, 1), (3, 1), (5, 1), (7, 1), (1, 2))
 
 with open('input.txt', 'r') as f:
     grid_map = f.read().splitlines()
@@ -23,4 +23,4 @@ print('A1:', count_trees(grid_map, 3, 1))
 
 print('Q2:', 'What do you get if you multiply together the number of trees',
       'encountered on each of the listed slopes?')
-print('A2:', prod_from_slopes(grid_map, SLOPES))
+print('A2:', prod_from_slopes(grid_map, slopes))
