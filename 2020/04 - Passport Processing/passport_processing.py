@@ -42,7 +42,7 @@ def validate_eye_color(color: str) -> bool:
 def validate_pid(pid: str) -> bool:
     return bool(RE_PID.match(pid))
 
-def validate_cid(cid) -> bool:
+def validate_cid(cid: str) -> bool:
     return True
 
 validate_fields = {
@@ -65,7 +65,8 @@ def check_fields_exist(passport: dict, fields: set) -> bool:
 def validate_passport(passport: dict, fields: set) -> bool:
     return (
         check_fields_exist(passport, fields)
-        and all(validate_fields[key](value) for key, value in passport.items())
+        and all(validate_fields[field](value)
+                for field, value in passport.items())
     )
 
 
