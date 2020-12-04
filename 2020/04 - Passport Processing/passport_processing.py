@@ -1,4 +1,3 @@
-from pprint import pprint
 from functools import partial
 import re
 
@@ -11,12 +10,18 @@ RE_PID = re.compile('^[0-9]{9}$')
 with open('input.txt', 'r') as f:
     raw_passports = f.read()
 
+
+# --- Parsing ---
+
 def parse_passport(raw_passport: str) -> dict:
     return dict(field.split(':') for field in raw_passport.split())
 
 def parse_passports(raw_passports: str) -> list[dict]:
     return [parse_passport(raw_passport)
             for raw_passport in raw_passports.split('\n\n')]
+
+
+# -- Validate fields ---
 
 def validate_year_range(year: str, low: str, high: str) -> bool:
     return low <= year <= high
@@ -25,7 +30,7 @@ def validate_height(height: str) -> bool:
     measure, height = height[-2:], height[:-2]
     if measure == 'cm':
         return '150' <= height <= '193'
-    if measure == 'in':
+    elif measure == 'in':
         return '59' <= height <= '76'
 
 def validate_hair_color(color: str) -> bool:
@@ -51,20 +56,27 @@ validate_fields = {
     'cid': validate_cid,
 }
 
-def check_passport_fields(passport: dict, fields: set) -> bool:
+
+# --- Validate passport ---
+
+def check_fields_exist(passport: dict, fields: set) -> bool:
     return all(rule in passport for rule in fields)
 
-def passport_validation(passport: dict, fields: set) -> bool:
+def validate_passport(passport: dict, fields: set) -> bool:
     return (
-        check_passport_fields(passport, fields)
+        check_fields_exist(passport, fields)
         and all(validate_fields[key](value) for key, value in passport.items())
     )
 
+
+# --- Run tests ---
+
 if __name__ == '__main__':
     passports = parse_passports(raw_passports)
+
     print('Q1:', 'In your batch file, how many passports are valid?',
           'Treat cid as optional.')
-    print('A1:', sum(check_passport_fields(passport, FIELDS)
+    print('A1:', sum(check_fields_exist(passport, FIELDS)
                      for passport in passports))
 
     print('Q2:', 'In your batch file, how many passports have the required',
