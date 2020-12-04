@@ -62,8 +62,12 @@ def passport_validation(passport: dict, fields: set) -> bool:
 
 if __name__ == '__main__':
     passports = parse_passports(raw_passports)
+    print('Q1:', 'In your batch file, how many passports are valid?',
+          'Treat cid as optional.')
     print('A1:', sum(check_passport_fields(passport, FIELDS)
                      for passport in passports))
 
+    print('Q2:', 'In your batch file, how many passports have the required',
+          'fields and valid values?')
     print('A2:', sum(passport_validation(passport, FIELDS)
                      for passport in passports))
