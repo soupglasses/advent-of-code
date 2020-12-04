@@ -12,17 +12,11 @@ with open('input.txt', 'r') as f:
     raw_passports = f.read()
 
 def parse_passport(raw_passport: str) -> dict:
-    passport = {}
-    for t in raw_passport.replace('\n', ' ').split():
-        key, value = t.split(':')
-        passport[key] = value
-    return passport
+    return dict(field.split(':') for field in raw_passport.split())
 
 def parse_passports(raw_passports: str) -> list[dict]:
-    passports = []
-    for raw_passport in raw_passports.split('\n\n'):
-        passports.append(parse_passport(raw_passport))
-    return passports
+    return [parse_passport(raw_passport)
+            for raw_passport in raw_passports.split('\n\n')]
 
 def validate_year_range(year: str, low: str, high: str) -> bool:
     return low <= year <= high
@@ -46,7 +40,7 @@ def validate_pid(pid: str) -> bool:
 def validate_cid(cid) -> bool:
     return True
 
-validate_key = {
+validate_fields = {
     'byr': partial(validate_year_range, low='1920', high='2002'),
     'iyr': partial(validate_year_range, low='2010', high='2020'),
     'eyr': partial(validate_year_range, low='2020', high='2030'),
@@ -63,7 +57,7 @@ def check_passport_fields(passport: dict, fields: set) -> bool:
 def passport_validation(passport: dict, fields: set) -> bool:
     return (
         check_passport_fields(passport, fields)
-        and all(validate_key[key](value) for key, value in passport.items())
+        and all(validate_fields[key](value) for key, value in passport.items())
     )
 
 if __name__ == '__main__':
