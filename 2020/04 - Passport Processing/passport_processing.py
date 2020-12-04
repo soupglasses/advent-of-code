@@ -81,5 +81,5 @@ if __name__ == '__main__':
 
     print('Q2:', 'In your batch file, how many passports have the required',
           'fields and valid values?')
-    print('A2:', sum(passport_validation(passport, FIELDS)
+    print('A2:', sum(validate_passport(passport, FIELDS)
                      for passport in passports))
