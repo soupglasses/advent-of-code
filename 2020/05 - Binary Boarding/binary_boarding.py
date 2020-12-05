@@ -1,34 +1,31 @@
 
 with open('input.txt', 'r') as f:
-    raw_seats = f.read().splitlines()
+    boarding_passes = f.read().splitlines()
 
-def get_row(f: str):
-    if 'F' in f or 'B' in f:
-        lim = (0, 127)
-    else:
-        lim = (0, 7)
-    for step in f:
-        split = sum(lim) / len(lim)
-        if step == 'F' or step == 'L':
-            lim = (lim[0], int(split))
+def parse_seat_pos(board_pass: str):
+    limit = (0, 2 ** len(board_pass) - 1)
+    for step in board_pass:
+        split = sum(limit) // 2
+        lower, upper = limit
+        if step in 'FL':
+            limit = (lower, split)
         else:
-            lim = (int(split) + 1, lim[1])
-    return lim[0]
+            limit = (split+1, upper)
+    return limit[0]
 
-def get_seat(b: str):
-    b_row, b_col = b[:7], b[7:]
-    row, col = get_row(b_row), get_row(b_col)
+def seat_pos(board_pass: str):
+    bp_row, bp_col = board_pass[:7], board_pass[7:]
+    row, col = parse_seat_pos(bp_row), parse_seat_pos(bp_col)
     return row, col
 
-def get_seat_id(b: str):
-    row, col = get_seat(b)
+def seat_id(board_pass: str):
+    row, col = seat_pos(board_pass)
     return row * 8 + col
 
 def find_missing(lst: list):
-    return [x for x in range(lst[0], lst[-1]+1)
-                             if x not in lst][0]
+    return [x for x in range(lst[0], lst[-1]+1) if x not in lst][0]
 
 if __name__ == '__main__':
-    taken_seats = [get_seat_id(id_) for id_ in raw_seats]
-    print('A1:', max(taken_seats))
-    print('A2:', find_missing(sorted(taken_seats)))
+    taken_seat_ids = [seat_id(board_pass) for board_pass in boarding_passes]
+    print('A1:', max(taken_seat_ids))
+    print('A2:', find_missing(sorted(taken_seat_ids)))
