@@ -23,7 +23,7 @@ def seat_id(board_pass: str):
     return row * 8 + col
 
 def find_missing(lst: list):
-    return [x for x in range(lst[0], lst[-1]+1) if x not in lst][0]
+    return next((x for x in range(lst[0], lst[-1]+1) if x not in lst))
 
 if __name__ == '__main__':
     taken_seat_ids = [seat_id(board_pass) for board_pass in boarding_passes]
