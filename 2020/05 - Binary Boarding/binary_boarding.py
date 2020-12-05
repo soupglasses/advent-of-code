@@ -27,5 +27,9 @@ def find_missing(lst: list):
 
 if __name__ == '__main__':
     taken_seat_ids = [seat_id(board_pass) for board_pass in boarding_passes]
+
+    print('Q1:', 'What is the highest seat ID on a boarding pass?')
     print('A1:', max(taken_seat_ids))
+
+    print('Q2:', 'What is the ID of your seat?')
     print('A2:', find_missing(sorted(taken_seat_ids)))
