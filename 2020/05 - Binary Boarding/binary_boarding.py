@@ -13,7 +13,7 @@ def parse_seat_pos(board_pass: str) -> int:
             limit = (split+1, upper)
     return limit[0]
 
-def seat_pos(board_pass: str) -> tuple[int]:
+def seat_pos(board_pass: str) -> tuple[int, int]:
     bp_row, bp_col = board_pass[:7], board_pass[7:]
     row, col = parse_seat_pos(bp_row), parse_seat_pos(bp_col)
     return row, col
