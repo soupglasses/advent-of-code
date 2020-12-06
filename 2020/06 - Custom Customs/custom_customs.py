@@ -1,6 +1,3 @@
-with open('input.txt', 'r') as f:
-    forms = f.read().split('\n\n')
-
 def part_1(forms: list) -> int:
     return sum(
         len(set(''.join(group.split())))
@@ -13,7 +10,11 @@ def part_2(forms: list) -> int:
         for group in forms
     )
 
+
 if __name__ == '__main__':
+    with open('input.txt', 'r') as f:
+        forms = f.read().split('\n\n')
+
     print('Q1:', 'For each group, count the number of questions to which',
           'anyone answered "yes". What is the sum of those counts?')
     print('A1:', part_1(forms))
