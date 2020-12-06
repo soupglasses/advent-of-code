@@ -1,6 +1,6 @@
 import re
 
-pattern = re.compile(r'(^\d+)-(\d+) (\w): (.+)', re.MULTILINE)
+PATTERN = re.compile(r'(^\d+)-(\d+) (\w): (.+)', re.MULTILINE)
 
 
 def valid_password_by_letters(low: int, high: int,
@@ -14,7 +14,7 @@ def valid_password_by_pos(low: int, high: int,
 
 if __name__ == '__main__':
     with open('input.txt', 'r') as f:
-        passwords = pattern.findall(f.read())
+        passwords = PATTERN.findall(f.read())
 
     print("Q1:", "How many passwords are valid according to their policies?")
     print("A1:", sum(
