@@ -1,6 +1,3 @@
-from operator import and_
-from functools import reduce
-
 with open('input.txt', 'r') as f:
     forms = f.read().split('\n\n')
 
@@ -12,7 +9,7 @@ def part_1(forms: list) -> int:
 
 def part_2(forms: list) -> int:
     return sum(
-        len(reduce(and_, map(set, group.splitlines())))
+        len(set.intersection(*map(set, group.splitlines())))
         for group in forms
     )
 
