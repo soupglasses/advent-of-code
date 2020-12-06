@@ -12,9 +12,9 @@ with open('input.txt', 'r') as f:
 
 
 # --- Parsing ---
-
 def parse_passport(raw_passport: str) -> dict:
     return dict(field.split(':') for field in raw_passport.split())
+
 
 def parse_passports(raw_passports: str) -> list[dict]:
     return [parse_passport(raw_passport)
@@ -22,9 +22,9 @@ def parse_passports(raw_passports: str) -> list[dict]:
 
 
 # -- Validate fields ---
-
 def validate_year_range(year: str, low: str, high: str) -> bool:
     return year.isdigit() and low <= year <= high
+
 
 def validate_height(height: str) -> bool:
     measure, height = height[-2:], height[:-2]
@@ -33,17 +33,22 @@ def validate_height(height: str) -> bool:
     elif measure == 'in':
         return height.isdigit() and '59' <= height <= '76'
 
+
 def validate_hair_color(color: str) -> bool:
     return bool(RE_HAIR_COLOR.match(color))
+
 
 def validate_eye_color(color: str) -> bool:
     return color in VALID_EYE_COLORS
 
+
 def validate_pid(pid: str) -> bool:
     return bool(RE_PID.match(pid))
 
+
 def validate_cid(cid: str) -> bool:
     return True
+
 
 validate_fields = {
     'byr': partial(validate_year_range, low='1920', high='2002'),
@@ -58,9 +63,9 @@ validate_fields = {
 
 
 # --- Validate passport ---
-
 def check_fields_exist(passport: dict, fields: set) -> bool:
     return all(rule in passport for rule in fields)
+
 
 def validate_passport(passport: dict, fields: set) -> bool:
     return (
@@ -71,7 +76,6 @@ def validate_passport(passport: dict, fields: set) -> bool:
 
 
 # --- Run tests ---
-
 if __name__ == '__main__':
     passports = parse_passports(raw_passports)
 
