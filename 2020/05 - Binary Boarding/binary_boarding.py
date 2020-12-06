@@ -1,8 +1,8 @@
-bp_binary = str.maketrans('FLBR', '0011')
+BP_BINARY = str.maketrans('FLBR', '0011')
 
 
 def seat_pos(board_pass: str) -> int:
-    return int(board_pass.translate(bp_binary), 2)
+    return int(board_pass.translate(BP_BINARY), 2)
 
 def seat_id(board_pass: str) -> int:
     row, col = seat_pos(board_pass[:7]), seat_pos(board_pass[7:])
