@@ -63,9 +63,7 @@ def validate_passport(passport: dict, fields: set) -> bool:
 
 if __name__ == '__main__':
     with open('input.txt', 'r') as f:
-        raw_passports = f.read()
-
-    passports = parse_passports(raw_passports)
+        passports = parse_passports(f.read())
 
     print('Q1:', 'In your batch file, how many passports are valid?',
           'Treat cid as optional.')
