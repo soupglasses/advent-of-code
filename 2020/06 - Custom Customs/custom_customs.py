@@ -11,11 +11,10 @@ def part_1(forms: list) -> int:
     )
 
 def part_2(forms: list) -> int:
-    sum_ = 0
-    for group in forms:
-        answers = [set(answer) for answer in group.strip().split('\n')]
-        sum_ += len(reduce(and_, answers))
-    return sum_
+    return sum(
+        len(reduce(and_, map(set, group.splitlines())))
+        for group in forms
+    )
 
 if __name__ == '__main__':
     print('Q1:', 'For each group, count the number of questions to which',
