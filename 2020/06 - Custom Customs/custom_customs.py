@@ -1,13 +1,13 @@
-def count_any(forms: list) -> int:
+def count_any(groups: list) -> int:
     return sum(
         len(set(''.join(group.split())))
-        for group in forms
+        for group in groups
     )
 
-def count_all(forms: list) -> int:
+def count_all(groups: list) -> int:
     return sum(
         len(set.intersection(*map(set, group.splitlines())))
-        for group in forms
+        for group in groups
     )
 
 
