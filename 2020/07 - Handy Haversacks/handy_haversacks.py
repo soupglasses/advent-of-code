@@ -26,14 +26,8 @@ def fits_in_bags(color: str, rules: dict[str, list]) -> set:
     return all_bags | set(bags)
 
 def required_bags(color: str, count: int, rules: dict[str, list]) -> int:
-    bags = rules[color]
-    total_bags = 0
-    for bag_count, bag_color in bags:
-        if bag_color:
-            total_bags += required_bags(bag_color, bag_count, rules)
-        else:
-            total_bags += bag_count
-    return count + total_bags * count
+    return count + sum(required_bags(bcolor, bcount, rules) * count
+                       for bcount, bcolor in rules[color])
 
 
 if __name__ == '__main__':
