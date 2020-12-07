@@ -1,5 +1,5 @@
-Advent of Code Day 7: ``custom_customs``
-========================================
+Advent of Code Day 7: ``handy_haversacks``
+==========================================
 
 https://adventofcode.com/2020/day/7
 
