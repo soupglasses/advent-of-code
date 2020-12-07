@@ -1,10 +1,10 @@
-def count_any(groups: list) -> int:
+def count_any(groups: list[str]) -> int:
     return sum(
         len(set(''.join(group.split())))
         for group in groups
     )
 
-def count_all(groups: list) -> int:
+def count_all(groups: list[str]) -> int:
     return sum(
         len(set.intersection(*map(set, group.splitlines())))
         for group in groups
