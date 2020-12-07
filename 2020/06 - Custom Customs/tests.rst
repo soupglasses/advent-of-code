@@ -1,22 +1,33 @@
 Advent of Code Day 6: ``custom_customs``
 =======================================
 
-Running tests: ``python -m doctest -v tests.rst``
+Running tests: 
+^^^^^^^^^^^^^^
+
+.. code-block:: sh
+
+    $ python -m doctest -v tests.rst
 
 ``count_any``
 -------------
 
 For each group, count the unique answers. Return the total for all groups.
 
+.. code-block:: python
+
     >>> from custom_customs import count_any
 
 Signature:
 ^^^^^^^^^^
 
-    ``count_any(groups: list[str]) -> int``
+.. code-block:: python
+    
+    count_any(groups: list[str]) -> int
 
 Usage:
 ^^^^^^
+
+.. code-block:: python
 
     >>> count_any([])
     0
@@ -31,15 +42,21 @@ Usage:
 -------------
 For each group, count what everyone answered. Return the total for all groups.
 
+.. code-block:: python
+
     >>> from custom_customs import count_all
 
 Signature:
 ^^^^^^^^^^
 
-    ``count_all(groups: list[str]) -> int``
+.. code-block:: python
+
+    count_all(groups: list[str]) -> int
 
 Usage:
 ^^^^^^
+
+.. code-block:: python
 
     >>> count_all([])
     0
