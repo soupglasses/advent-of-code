@@ -1,13 +1,15 @@
 Advent of Code Day 6: ``custom_customs``
 =======================================
 
-Running tests: 
+https://adventofcode.com/2020/day/7
+
+**Running the tests:**
 
 .. code-block:: sh
 
     $ python -m doctest -v tests.rst
 
-Setup:
+**Setup:**
 
 .. code-block:: python
 
@@ -17,7 +19,15 @@ Setup:
 ``parse``
 ---------
 
-Usage:
+Returns a dictionary with keys of the bag's color and a list of tuples containing the rules that the bag color needs to follow.
+
+**Signature:**
+
+.. code-block:: python
+    
+    parse(raw_rules: str) -> dict[str, list]:
+
+**Usage:**
 
 .. code-block:: python
 
@@ -27,11 +37,22 @@ Usage:
 
     >>> rules = parse(example)
 
+    >>> list(rules.items())[0:2]
+    [('light red', [(1, 'bright white'), (2, 'muted yellow')]), ('dark orange', [(3, 'bright white'), (4, 'muted yellow')])]
+
 
 ``fits_in_bags``
 ----------------
 
-Usage:
+Returns a set of all bag colors that ``color`` can fit into following ``rules``.
+
+**Signature**:
+
+.. code-block:: python
+    
+    fits_in_bags(color: str, rules: dict[str, list]) -> set
+
+**Usage:**
 
 .. code-block:: python
 
@@ -49,7 +70,17 @@ Usage:
 ``required_bags``
 -----------------
 
-Usage:
+Returns the total amount of bags required to fit into bag ``color``, following the given ``rules``.
+
+Note: Return includes the top most bag, subtract value by ``count`` to only count the total bags needed inside the parent bag.
+
+**Signature**:
+
+.. code-block:: python
+    
+    required_bags(color: str, count: int, rules: dict[str, list]) -> int
+
+**Usage:**
 
 .. code-block:: python
 

@@ -3,16 +3,17 @@ import re
 RE_BAG_RULES = re.compile(r'(\d+) (\w+ \w+)')
 
 
-def parse(raw_rules: str):
+def parse(raw_rules: str) -> dict[str, list]:
     rules = {}
-    raw_rules = [rule.split(' contain ') for rule in raw_rules.splitlines()]
-    for bag, bag_rules in raw_rules:
-        bag = bag.replace(' bags', '')
-        bag_rules = RE_BAG_RULES.findall(bag_rules)
+    raw_rules_split = [rule.split(' contain ')
+                       for rule in raw_rules.splitlines()]
+    for left, right in raw_rules_split:
+        bag = left.replace(' bags', '')
+        bag_rules = RE_BAG_RULES.findall(right)
         rules[bag] = [(int(count), color) for count, color in bag_rules]
     return rules
 
-def fits_in_bags(color: str, rules: dict) -> int:
+def fits_in_bags(color: str, rules: dict[str, list]) -> set:
     bags = [
         b_color
         for b_color, b_rules in rules.items()
@@ -24,7 +25,7 @@ def fits_in_bags(color: str, rules: dict) -> int:
         all_bags |= fits_in_bags(bag_color, rules)
     return all_bags | set(bags)
 
-def required_bags(color: str, count: int, rules: dict) -> int:
+def required_bags(color: str, count: int, rules: dict[str, list]) -> int:
     bags = rules[color]
     total_bags = 0
     for bag_count, bag_color in bags:
