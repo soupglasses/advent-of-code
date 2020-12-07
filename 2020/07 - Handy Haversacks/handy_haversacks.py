@@ -13,17 +13,18 @@ def parse(raw_rules: str) -> dict[str, list]:
         rules[bag] = [(int(count), color) for count, color in bag_rules]
     return rules
 
-def fits_in_bags(color: str, rules: dict[str, list]) -> set:
-    bags = [
-        b_color
-        for b_color, b_rules in rules.items()
-        for _, br_color in b_rules
-        if br_color and color in br_color
-    ]
+def bags_containing_bag(bag: str, rules: dict[str, list]) -> int:
+    return {r_bag
+            for r_bag, r_rule in rules.items()
+            for _, r_color in r_rule
+            if bag in r_color}
+
+def fits_in_bags(bag: str, rules: dict[str, list]) -> set:
+    bags = bags_containing_bag(bag, rules)
     all_bags = set()
     for bag_color in bags:
         all_bags |= fits_in_bags(bag_color, rules)
-    return all_bags | set(bags)
+    return bags | all_bags
 
 def required_bags(color: str, count: int, rules: dict[str, list]) -> int:
     return count + sum(required_bags(bcolor, bcount, rules) * count
