@@ -1,5 +1,5 @@
-Advent of Code Day 6: ``custom_customs``
-=======================================
+Advent of Code Day 7: ``custom_customs``
+========================================
 
 https://adventofcode.com/2020/day/7
 
@@ -25,7 +25,7 @@ Returns a dictionary with keys of the bag's color and a list of tuples containin
 
 .. code-block:: python
     
-    parse(raw_rules: str) -> dict[str, list]:
+    parse(raw_rules: str) -> dict[str, list]
 
 **Usage:**
 
@@ -72,7 +72,7 @@ Returns a set of all bag colors that ``color`` can fit into following ``rules``.
 
 Returns the total amount of bags required to fit into bag ``color``, following the given ``rules``.
 
-Note: Return includes the top most bag, subtract value by ``count`` to only count the total bags needed inside the parent bag.
+Note: Return includes the top most bag(s), subtract the return value by ``count`` to get total bags needed inside of parent bag.
 
 **Signature**:
 
