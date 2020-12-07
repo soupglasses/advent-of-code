@@ -35,5 +35,10 @@ if __name__ == '__main__':
     with open('input.txt', 'r') as f:
         rules = parse(f.read())
 
+    print('Q1:', 'How many bag colors can eventually contain at least one',
+          'shiny gold bag?')
     print('A1:', len(fits_in_bags('shiny gold', rules)))
+
+    print('Q2:', 'How many individual bags are required inside your single',
+          'shiny gold bag?')
     print('A2:', required_bags('shiny gold', 1, rules) - 1)
