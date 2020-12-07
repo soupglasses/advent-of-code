@@ -10,6 +10,11 @@ For each group, count the unique answers. Return the total for all groups.
 
     >>> from custom_customs import count_any
 
+Signature:
+^^^^^^^^^^
+
+    ``count_any(groups: list[str]) -> int``
+
 Usage:
 ^^^^^^
 
@@ -24,10 +29,14 @@ Usage:
 
 ``count_all``
 -------------
-
 For each group, count what everyone answered. Return the total for all groups.
 
     >>> from custom_customs import count_all
+
+Signature:
+^^^^^^^^^^
+
+    ``count_all(groups: list[str]) -> int``
 
 Usage:
 ^^^^^^
