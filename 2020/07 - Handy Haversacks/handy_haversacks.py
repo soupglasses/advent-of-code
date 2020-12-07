@@ -4,6 +4,9 @@ RE_BAG_RULES = re.compile(r'(\d+) (\w+ \w+)')
 
 
 def parse(raw_rules: str) -> dict[str, list]:
+    """Returns a dictionary with keys of the bag's color and a list with
+    tuples containing the rules that the bag needs to follow.
+    """
     rules = {}
     raw_rules_split = [rule.split(' contain ')
                        for rule in raw_rules.splitlines()]
@@ -14,12 +17,16 @@ def parse(raw_rules: str) -> dict[str, list]:
     return rules
 
 def bags_containing_bag(bag: str, rules: dict[str, list]) -> int:
+    """Returns the bags that have bag in their rules."""
     return {r_bag
             for r_bag, r_rule in rules.items()
             for _, r_color in r_rule
             if bag in r_color}
 
 def fits_in_bags(bag: str, rules: dict[str, list]) -> set:
+    """Returns a set of all `bag` colors that bag can fit into
+    following `rules`.
+    """
     bags = bags_containing_bag(bag, rules)
     all_bags = set()
     for bag_color in bags:
@@ -27,6 +34,12 @@ def fits_in_bags(bag: str, rules: dict[str, list]) -> set:
     return bags | all_bags
 
 def required_bags(bag: str, count: int, rules: dict[str, list]) -> int:
+    """Returns the total amount of bags required to fit `bag` into bag,
+    following the given `rules`.
+
+    Note: Return includes the top `bag`(s), subtract the return value
+    by `count` to get total bags needed inside of the parent bag.
+    """
     return count + sum(required_bags(bcolor, bcount, rules) * count
                        for bcount, bcolor in rules[bag])
 
