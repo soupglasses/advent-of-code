@@ -41,16 +41,39 @@ Returns a dictionary with keys of the bag's color and a list of tuples containin
     [('light red', [(1, 'bright white'), (2, 'muted yellow')]), ('dark orange', [(3, 'bright white'), (4, 'muted yellow')])]
 
 
+``bags_containing_bag``
+-----------------------
+
+Returns the bags that have ``bag`` in their rules.
+
+**Signature:**
+
+.. code-block:: python
+
+    bags_containing_bag(bag: str, rules: dict[str, list]) -> int
+
+**Useage:**
+
+.. code-block:: python
+
+    >>> from handy_haversacks import bags_containing_bag
+
+.. code-block:: python
+
+    >>> bags_containing_bag('shiny gold', rules)
+    {'bright white', 'muted yellow'}
+
+
 ``fits_in_bags``
 ----------------
 
-Returns a set of all bag colors that ``color`` can fit into following ``rules``.
+Returns a set of all bag colors that ``bag`` can fit into following ``rules``.
 
-**Signature**:
+**Signature:**
 
 .. code-block:: python
     
-    fits_in_bags(color: str, rules: dict[str, list]) -> set
+    fits_in_bags(bag: str, rules: dict[str, list]) -> set
 
 **Usage:**
 
@@ -70,15 +93,15 @@ Returns a set of all bag colors that ``color`` can fit into following ``rules``.
 ``required_bags``
 -----------------
 
-Returns the total amount of bags required to fit into bag ``color``, following the given ``rules``.
+Returns the total amount of bags required to fit into bag ``bag``, following the given ``rules``.
 
 Note: Return includes the top most bag(s), subtract the return value by ``count`` to get total bags needed inside of parent bag.
 
-**Signature**:
+**Signature:**
 
 .. code-block:: python
     
-    required_bags(color: str, count: int, rules: dict[str, list]) -> int
+    required_bags(bag: str, count: int, rules: dict[str, list]) -> int
 
 **Usage:**
 

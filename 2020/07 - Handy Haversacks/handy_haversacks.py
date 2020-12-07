@@ -26,9 +26,9 @@ def fits_in_bags(bag: str, rules: dict[str, list]) -> set:
         all_bags |= fits_in_bags(bag_color, rules)
     return bags | all_bags
 
-def required_bags(color: str, count: int, rules: dict[str, list]) -> int:
+def required_bags(bag: str, count: int, rules: dict[str, list]) -> int:
     return count + sum(required_bags(bcolor, bcount, rules) * count
-                       for bcount, bcolor in rules[color])
+                       for bcount, bcolor in rules[bag])
 
 
 if __name__ == '__main__':
