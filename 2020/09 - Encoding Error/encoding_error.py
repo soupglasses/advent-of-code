@@ -13,7 +13,7 @@ def find_bad_val(xmas: list[int], size: int):
             return num
 
 def break_encryption(xmas: list[int], bad_val: int):
-    for size in range(2, len(xmas) - 2):
+    for size in range(2, len(xmas)):
         for i in range(0, len(xmas)):
             chunk = xmas[i:i + size]
             if sum(chunk) == bad_val:
