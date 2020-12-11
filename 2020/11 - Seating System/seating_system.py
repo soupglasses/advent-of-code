@@ -22,11 +22,11 @@ def get_neighbours_advanced(i: int, y: int, lst: list):
             if not (0 <= i + ni < height and 0 <= y + ny < width):
                 tmp += '.'
                 break
-            if lst[i + ni][y + ny] == '#':
-                tmp += '#'
-                break
-            elif lst[i + ni][y + ny] == 'L':
-                tmp += 'L'
+
+            char = lst[i + ni][y + ny]
+
+            if char == 'L' or char == '#':
+                tmp += char
                 break
             else:
                 ni, ny = nix + ni, nyx + ny
