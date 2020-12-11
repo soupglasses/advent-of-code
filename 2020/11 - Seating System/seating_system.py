@@ -16,23 +16,25 @@ def get_neighbours_simple(i: int, y: int, lst: list):
     return count
 
 def get_neighbours_advanced(i: int, y: int, lst: list):
-    tmp = ""
+    count = 0
     height, width = len(lst), len(lst[i])
     for ni, ny in NEIGHBOURS:
-        nix, nyx = ni, ny
+        s_ni, s_ny = ni, ny
         while True:
-            if not (0 <= i + ni < height and 0 <= y + ny < width):
-                tmp += '.'
+            row, col = i + ni, y + ny
+            if not (0 <= row < height and 0 <= col < width):
                 break
 
-            char = lst[i + ni][y + ny]
+            char = lst[row][col]
 
-            if char == 'L' or char == '#':
-                tmp += char
+            if char == '#':
+                count += 1
+                break
+            elif char == 'L':
                 break
             else:
-                ni, ny = nix + ni, nyx + ny
-    return tmp
+                ni, ny = s_ni + ni, s_ny + ny
+    return count
 
 def stepper(seating: list, tolerance: int):
     step = []
@@ -43,7 +45,7 @@ def stepper(seating: list, tolerance: int):
                 if tolerance <= 4:
                     around = get_neighbours_simple(i, y, seating)
                 else:
-                    around = get_neighbours_advanced(i, y, seating).count('#')
+                    around = get_neighbours_advanced(i, y, seating)
 
                 if char == 'L' and around == 0:
                     step[i].append('#')
