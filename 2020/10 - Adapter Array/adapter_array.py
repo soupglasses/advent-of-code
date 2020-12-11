@@ -1,15 +1,16 @@
-from functools import lru_cache
+from cachetools import cached, LRUCache
+from cachetools.keys import hashkey
 
 
-def part_1():
+def part_1(adapters: list[int]):
     diffs = [0, 0, 0]
     for a, b in zip(adapters[:-1], adapters[1:]):
         diff = b - a
         diffs[diff - 1] += 1
     return diffs[0] * diffs[2]
 
-@lru_cache
-def part_2(s_pos: int = 0):
+@cached(LRUCache(maxsize=256), key=lambda _, s_pos: hashkey(s_pos))
+def part_2(adapters: list[int], s_pos: int):
     count = 0
     end = adapters[-1]
     s_val = adapters[s_pos]
@@ -18,7 +19,7 @@ def part_2(s_pos: int = 0):
         if n_val - s_val <= 3:
             if n_val == end:
                 count += 1
-            count += part_2(n_pos)
+            count += part_2(adapters, n_pos)
         else:
             break
     return count
@@ -30,5 +31,5 @@ if __name__ == '__main__':
 
     adapters = [0] + sorted(adapters) + [max(adapters) + 3]
 
-    print('A1:', part_1())
-    print('A2:', part_2())
+    print('A1:', part_1(adapters))
+    print('A2:', part_2(adapters, 0))
