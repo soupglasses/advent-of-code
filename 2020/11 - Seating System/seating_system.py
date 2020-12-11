@@ -1,5 +1,3 @@
-# TODO: Reimplement fully in numpy. Python lists severely slow down this program.
-
 NEIGHBOURS = ((-1, -1), (-1, 0), (-1, 1),
               ( 0, -1),          ( 0, 1),
               ( 1, -1), ( 1, 0), ( 1, 1))
