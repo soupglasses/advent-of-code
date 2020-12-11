@@ -6,14 +6,14 @@ NEIGHBOURS = ((-1, -1), (-1, 0), (-1, 1),
 
 
 def get_neighbours_simple(i: int, y: int, lst: list):
-    tmp = ""
+    count = 0
     height, width = len(lst), len(lst[i])
     for ni, ny in NEIGHBOURS:
-        if 0 <= i + ni < height and 0 <= y + ny < width:
-            tmp += lst[i + ni][y + ny]
-        else:
-            tmp += '.'
-    return tmp
+        row, col = i + ni, y + ny
+        if 0 <= row < height and 0 <= col < width:
+            if lst[row][col] == '#':
+                count += 1
+    return count
 
 def get_neighbours_advanced(i: int, y: int, lst: list):
     tmp = ""
@@ -41,7 +41,7 @@ def stepper(seating: list, tolerance: int):
         for y, char in enumerate(line):
             if char in 'L#':
                 if tolerance <= 4:
-                    around = get_neighbours_simple(i, y, seating).count('#')
+                    around = get_neighbours_simple(i, y, seating)
                 else:
                     around = get_neighbours_advanced(i, y, seating).count('#')
 
