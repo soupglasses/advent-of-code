@@ -2,6 +2,7 @@ import turtle
 
 DIRECTIONS = {'N': 90, 'S': 270, 'E': 0, 'W': 180}
 
+
 def move_direction(direction: str, distance: int):
     old_heading = turtle.heading()
     direction = DIRECTIONS[direction]
@@ -23,8 +24,8 @@ def do_action(action: str, value: int):
 
 
 if __name__ == '__main__':
-    turtle.speed(0)      # max speed
-    turtle.tracer(0, 0)  # disable screen refreshing
+    turtle.speed(0)       # max speed
+    turtle.tracer(False)  # disable screen refresh
 
     with open('input.txt', 'r') as f:
         instructions = [(line[0], int(line[1:]))
@@ -36,5 +37,5 @@ if __name__ == '__main__':
     east, north = map(abs, turtle.pos())
     print('A1:', int(east + north))
 
-    turtle.update()  # refresh screen
-    turtle.done()    # show window till user input
+    turtle.update()
+    turtle.done()
