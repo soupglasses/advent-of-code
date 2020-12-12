@@ -9,7 +9,7 @@ def part_1(adapters: list[int]):
         diffs[diff - 1] += 1
     return diffs[0] * diffs[2]
 
-@cached(LRUCache(maxsize=256), key=lambda _, s_pos: hashkey(s_pos))
+@cached(LRUCache(maxsize=128), key=lambda _, s_pos: hashkey(s_pos))
 def part_2(adapters: list[int], s_pos: int):
     count = 0
     end = adapters[-1]
