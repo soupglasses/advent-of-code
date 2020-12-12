@@ -24,8 +24,9 @@ def do_action(action: str, value: int):
 
 
 if __name__ == '__main__':
-    turtle.speed(0)       # max speed
-    turtle.tracer(False)  # disable screen refresh
+    turtle.speed(0)                # max speed
+    turtle.tracer(False)           # disable screen refresh
+    turtle.screensize(4000, 4000)  # allow scrolling canvas
 
     with open('input.txt', 'r') as f:
         instructions = [(line[0], int(line[1:]))
@@ -37,5 +38,5 @@ if __name__ == '__main__':
     east, north = map(abs, turtle.pos())
     print('A1:', int(east + north))
 
-    turtle.update()
-    turtle.done()
+    turtle.update()  # update screen
+    turtle.done()    # show screen till closed

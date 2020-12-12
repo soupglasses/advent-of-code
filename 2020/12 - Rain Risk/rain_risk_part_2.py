@@ -44,8 +44,9 @@ def do_action(action: str, value: int):
 
 
 # Setup turtle
-turtle.hideturtle()
-turtle.tracer(0, 0)
+turtle.hideturtle()                  # dont show default turtle
+turtle.tracer(0, 0)                  # dont update screen
+turtle.screensize(100_000, 100_000)  # allow for scrolling canvas
 
 ship = turtle.Turtle()
 ship.setpos(0, 0)
@@ -69,5 +70,5 @@ if __name__ == '__main__':
     east, north = map(abs, ship.pos())
     print('A2:', int(east + north))
 
-    turtle.update()
-    turtle.done()
+    turtle.update()  # update screen
+    turtle.done()    # show screen till exit
