@@ -16,21 +16,22 @@ def parse_passports(raw_passports: str) -> list[dict]:
             for raw_passport in raw_passports.split('\n\n')]
 
 
-def validate_within(low: int, value: str, high: int) -> bool:
+def number_within(low: int, number: str, high: int) -> bool:
     try:
-        return low <= int(value) <= high
+        return low <= int(number) <= high
     except ValueError:
         return False
 
+
 def validate_year(year: str, low: int, high: int) -> bool:
-    return validate_within(low, year, high)
+    return number_within(low, year, high)
 
 def validate_height(height: str) -> bool:
     unit, height = height[-2:], height[:-2]
     if unit == 'cm':
-        return validate_within(150, height, 193)
+        return number_within(150, height, 193)
     elif unit == 'in':
-        return validate_within(59, height, 76)
+        return number_within(59, height, 76)
 
 def validate_hair_color(color: str) -> bool:
     return bool(RE_HAIR_COLOR.match(color))
