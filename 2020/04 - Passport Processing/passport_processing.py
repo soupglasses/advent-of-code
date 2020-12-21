@@ -16,15 +16,21 @@ def parse_passports(raw_passports: str) -> list[dict]:
             for raw_passport in raw_passports.split('\n\n')]
 
 
-def validate_year(year: str, low: str, high: str) -> bool:
-    return year.isdigit() and low <= year <= high
+def validate_within(low: int, value: str, high: int) -> bool:
+    try:
+        return low <= int(value) <= high
+    except ValueError:
+        return False
+
+def validate_year(year: str, low: int, high: int) -> bool:
+    return validate_within(low, year, high)
 
 def validate_height(height: str) -> bool:
-    measure, height = height[-2:], height[:-2]
-    if measure == 'cm':
-        return height.isdigit() and '150' <= height <= '193'
-    elif measure == 'in':
-        return height.isdigit() and '59' <= height <= '76'
+    unit, height = height[-2:], height[:-2]
+    if unit == 'cm':
+        return validate_within(150, height, 193)
+    elif unit == 'in':
+        return validate_within(59, height, 76)
 
 def validate_hair_color(color: str) -> bool:
     return bool(RE_HAIR_COLOR.match(color))
@@ -39,9 +45,9 @@ def validate_cid(cid: str) -> bool:
     return True
 
 validate_fields = {
-    'byr': partial(validate_year, low='1920', high='2002'),
-    'iyr': partial(validate_year, low='2010', high='2020'),
-    'eyr': partial(validate_year, low='2020', high='2030'),
+    'byr': partial(validate_year, low=1920, high=2002),
+    'iyr': partial(validate_year, low=2010, high=2020),
+    'eyr': partial(validate_year, low=2020, high=2030),
     'hgt': validate_height,
     'hcl': validate_hair_color,
     'ecl': validate_eye_color,
