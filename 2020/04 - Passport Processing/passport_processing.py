@@ -57,12 +57,12 @@ validate_fields = {
 }
 
 
-def check_fields_exist(passport: dict, fields: set) -> bool:
-    return all(rule in passport for rule in fields)
+def check_fields(passport: dict) -> bool:
+    return all(rule in passport for rule in FIELDS)
 
-def validate_passport(passport: dict, fields: set) -> bool:
+def validate_passport(passport: dict) -> bool:
     return (
-        check_fields_exist(passport, fields)
+        check_fields(passport)
         and all(validate_fields[field](value)
                 for field, value in passport.items())
     )
@@ -74,10 +74,10 @@ if __name__ == '__main__':
 
     print('Q1:', 'In your batch file, how many passports are valid?',
           'Treat cid as optional.')
-    print('A1:', sum(check_fields_exist(passport, FIELDS)
+    print('A1:', sum(check_fields(passport)
                      for passport in passports))
 
     print('Q2:', 'In your batch file, how many passports have the required',
           'fields and valid values?')
-    print('A2:', sum(validate_passport(passport, FIELDS)
+    print('A2:', sum(validate_passport(passport)
                      for passport in passports))
