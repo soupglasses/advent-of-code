@@ -16,22 +16,16 @@ def parse_passports(raw_passports: str) -> list[dict]:
             for raw_passport in raw_passports.split('\n\n')]
 
 
-def number_within(low: int, number: str, high: int) -> bool:
-    try:
-        return low <= int(number) <= high
-    except ValueError:
-        return False
-
-
 def validate_year(year: str, low: int, high: int) -> bool:
-    return number_within(low, year, high)
+    return low <= int(year) <= high
 
 def validate_height(height: str) -> bool:
     unit, height = height[-2:], height[:-2]
     if unit == 'cm':
-        return number_within(150, height, 193)
+        return 150 <= int(height) <= 193
     elif unit == 'in':
-        return number_within(59, height, 76)
+        return 59 <= int(height) <= 76
+    return False
 
 def validate_hair_color(color: str) -> bool:
     return bool(RE_HAIR_COLOR.match(color))
@@ -44,6 +38,7 @@ def validate_pid(pid: str) -> bool:
 
 def validate_cid(cid: str) -> bool:
     return True
+
 
 validate_fields = {
     'byr': partial(validate_year, low=1920, high=2002),
@@ -58,13 +53,14 @@ validate_fields = {
 
 
 def check_fields(passport: dict) -> bool:
-    return all(rule in passport for rule in FIELDS)
+    return all(field in passport for field in FIELDS)
 
 def validate_passport(passport: dict) -> bool:
     return (
-        check_fields(passport)
-        and all(validate_fields[field](value)
-                for field, value in passport.items())
+        check_fields(passport) and all(
+            validate_fields[field](value)
+            for field, value in passport.items()
+        )
     )
 
 
