@@ -12,7 +12,7 @@ def count_trees(grid: list, right: int, down: int) -> int:
             trees += 1
     return trees
 
-def prod_from_slopes(grid: list, slopes: list) -> int:
+def prod_from_slopes(grid: list, slopes: tuple) -> int:
     return prod(count_trees(grid, right, down) for right, down in slopes)
 
 
