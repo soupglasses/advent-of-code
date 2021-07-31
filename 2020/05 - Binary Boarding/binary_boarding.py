@@ -9,7 +9,7 @@ def seat_id(board_pass: str) -> int:
     return row * 8 + col
 
 def find_missing(lst: list) -> int:
-    return next(i for i in range(lst[0], lst[-1]+1) if i not in lst)
+    return next(i for i in range(min(lst), max(lst) + 1) if i not in lst)
 
 
 if __name__ == '__main__':
@@ -22,4 +22,4 @@ if __name__ == '__main__':
     print('A1:', max(taken_seat_ids))
 
     print('Q2:', 'What is the ID of your seat?')
-    print('A2:', find_missing(sorted(taken_seat_ids)))
+    print('A2:', find_missing(taken_seat_ids))
