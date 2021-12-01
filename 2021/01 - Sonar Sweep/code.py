@@ -16,12 +16,20 @@ def parse_file(path: str) -> Data:
 
 
 def part_1(data: Data) -> int:
-    "Count all increasing measurements in a list."
+    """
+    How many measurements are larger than the previous measurement?
+    """
     return sum(map(operator.lt, data, data[1:]))
 
 
 def part_2(data: Data) -> int:
-    "Count all increasing measuements in a three-wide sliding window."
+    """
+    Consider sums of a three-measurement sliding window. How many sums
+    are larger than the previous sum?
+    """
+    # Since the the sliding windows are built up as `a + b + c < b + c + d`,
+    # we can take out `b` and `c` from both sides. Ending up with a simple
+    # `a < d` comparison.
     return sum(map(operator.lt, data, data[3:]))
 
 
