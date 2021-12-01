@@ -18,8 +18,7 @@ def part_1(data: list[int]) -> int:
 
 def part_2(data: list[int]) -> int:
     "Count all increasing measuements in a three-wide sliding window."
-    window: list[int] = list(map(sum, zip(data, data[1:], data[2:])))
-    return part_1(window)
+    return sum(map(operator.lt, data, data[3:]))
 
 
 def main():
