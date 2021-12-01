@@ -27,9 +27,9 @@ def part_2(data: Data) -> int:
     Consider sums of a three-measurement sliding window. How many sums
     are larger than the previous sum?
     """
-    # Since the the sliding windows are built up as `a + b + c < b + c + d`,
-    # we can take out `b` and `c` from both sides. Ending up with a simple
-    # `a < d` comparison.
+    # Due to the sliding windows being summed together in a
+    # `a+b+c < b+c+d` check, we can simplify out `b` and `c` from
+    # both sides, leaving only a `a < d` comparison.
     return sum(map(operator.lt, data, data[3:]))
 
 
