@@ -5,24 +5,28 @@ https://adventofcode.com/2021/day/1
 """
 import operator
 
+Data = list[int]
 
-def fetch_data(path: str) -> list[int]:
+
+def parse_file(path: str) -> Data:
     with open(path) as f:
-        return list(map(int, f.read().splitlines()))
+        raw = f.read().splitlines()
+        data = list(map(int, raw))
+    return data
 
 
-def part_1(data: list[int]) -> int:
+def part_1(data: Data) -> int:
     "Count all increasing measurements in a list."
     return sum(map(operator.lt, data, data[1:]))
 
 
-def part_2(data: list[int]) -> int:
+def part_2(data: Data) -> int:
     "Count all increasing measuements in a three-wide sliding window."
     return sum(map(operator.lt, data, data[3:]))
 
 
 def main():
-    data: list[int] = fetch_data("example.txt")
+    data = parse_file("example.txt")
 
     print("Part 1:", part_1(data))
     print("Part 2:", part_2(data))
