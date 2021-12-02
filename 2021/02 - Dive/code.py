@@ -10,41 +10,53 @@ Data = list[tuple[str, int]]
 def parse_file(path: str) -> Data:
     with open(path) as f:
         raw = f.read().splitlines()
-        data = map(str.split, raw)
-        data = map(lambda x: (x[0], int(x[1])), data)
-    return list(data)
+        data = [(direction, int(amount)) for direction, amount in map(str.split, raw)]
+    return data
 
 
-def part_1(data: Data):
+def plotter(data: Data) -> tuple[int, int, int]:
     """
-    What do you get if you multiply your final horizontal position by
-    your final depth?
+    Finds the end position for a given list of directions.
+
+    Returns:
+        A 3-integer tuple corresponding to the end positions calculated
+        by the inputted data, where:
+
+        x: is the distance travelled on the x axis
+        y_1: is the distance travelled on the flipped y axis
+        y_2: is the flipped y axis calculated by the aim method
+            described in part 2
     """
-    distance, depth = 0, 0
+    x, y_1, y_2 = 0, 0, 0
     for direction, amount in data:
-        if direction == "forward":
-            distance += amount
+        if direction == "up":
+            y_1 -= amount
         elif direction == "down":
-            depth += amount
-        elif direction == "up":
-            depth -= amount
+            y_1 += amount
+        elif direction == "forward":
+            x += amount
+            y_2 += y_1 * amount
+    return x, y_1, y_2
+
+
+def part_1(data: Data) -> int:
+    """
+    Calculate the horizontal position and depth you would have after
+    following the planned course. What do you get if you multiply your
+    final horizontal position by your final depth?
+    """
+    distance, depth, _ = plotter(data)
     return distance * depth
 
 
-def part_2(data: Data):
+def part_2(data: Data) -> int:
     """
-    What do you get if you multiply your final horizontal position by
-    your final depth?
+    Using this new interpretation of the commands, calculate the
+    horizontal position and depth you would have after following the
+    planned course. What do you get if you multiply your final
+    horizontal position by your final depth?
     """
-    distance, aim, depth = 0, 0, 0
-    for direction, amount in data:
-        if direction == "down":
-            aim += amount
-        elif direction == "up":
-            aim -= amount
-        elif direction == "forward":
-            distance += amount
-            depth += aim * amount
+    distance, _, depth = plotter(data)
     return distance * depth
 
 
