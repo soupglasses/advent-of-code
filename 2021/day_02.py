@@ -1,5 +1,5 @@
 """
-Day 2:
+Day 2: Dive
 
 https://adventofcode.com/2021/day/2
 """
@@ -61,7 +61,7 @@ def part_2(data: Data) -> int:
 
 
 def main():
-    data = parse_file("example.txt")
+    data = parse_file("inputs/example_02.txt")
 
     print("Part 1", part_1(data))
     print("Part 2", part_2(data))
