@@ -3,7 +3,6 @@ Day 3: Binary Diagnostic
 
 https://adventofcode.com/2021/day/3
 """
-from collections import Counter
 from itertools import count
 from typing import Optional
 
@@ -17,20 +16,15 @@ def parse_file(path: str) -> Data:
     return data
 
 
-def most_common(iterable):
-    occurences = Counter(iterable).most_common(2)
-    if occurences[0][1] == occurences[1][1]:
-        # Bias towrads the higher value
-        return sorted(map(lambda x: x[0], occurences), reverse=True)[0]
-    return occurences[0][0]
+def most_common(text: str) -> str:
+    ones, zeros = text.count("1"), text.count("0")
+    if ones >= zeros:
+        return "1"
+    return "0"
 
 
-def least_common(iterable):
-    occurences = Counter(iterable).most_common()
-    if occurences[0][1] == occurences[1][1]:
-        # Bias towards the lower value
-        return sorted(map(lambda x: x[0], occurences))[0]
-    return occurences[-1][0]
+def least_common(text: str) -> str:
+    return "0" if most_common(text) == "1" else "1"
 
 
 def reduce_by_repeating(func, data: Data) -> Optional[str]:
@@ -49,7 +43,7 @@ def reduce_by_repeating(func, data: Data) -> Optional[str]:
             return next(iter(data), None)
 
         pos = i % width
-        vertical_line = list(zip(*data))[pos]
+        vertical_line = str(list(zip(*data))[pos])
         filter_value = func(vertical_line)
         data = [item for item in data if item[pos] == filter_value]
 
@@ -62,8 +56,8 @@ def part_1(data: Data):
     gamma rate and epsilon rate, then multiply them together. What is
     the power consumption of the submarine?
     """
-    gamma = int("".join(map(most_common, zip(*data))), base=2)
-    epsilon = int("".join(map(least_common, zip(*data))), base=2)
+    gamma = int("".join(map(most_common, map(str, zip(*data)))), base=2)
+    epsilon = int("".join(map(least_common, map(str, zip(*data)))), base=2)
     return gamma * epsilon
 
 
