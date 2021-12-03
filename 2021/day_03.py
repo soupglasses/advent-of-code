@@ -37,6 +37,11 @@ def reduce_on(func, data: Data, pos: int = 0) -> str:
 
     If the filtering removes all items from the list, return None.
     """
+    if not data:
+        raise Exception(
+            "Data is empty, cannot return " +
+            "(filter might have removed all values?)"
+        )
     if len(data) == 1:
         return data[0]
 
