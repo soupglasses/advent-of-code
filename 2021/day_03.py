@@ -3,7 +3,6 @@ Day 3: Binary Diagnostic
 
 https://adventofcode.com/2021/day/3
 """
-from itertools import count
 from typing import Optional
 
 Data = list[str]
@@ -34,20 +33,14 @@ def reduce_by_repeating(func, data: Data) -> Optional[str]:
 
     If the filtering removes all items from the list, return None.
     """
-    if not data:
-        return None
-
-    width = len(data[0])
-    for i in count():
-        if len(data) <= 1:
-            return next(iter(data), None)
-
+    i, width = 0, len(next(iter(data), ""))
+    while len(data) > 1:
         pos = i % width
         vertical_line = str(list(zip(*data))[pos])
         filter_value = func(vertical_line)
         data = [item for item in data if item[pos] == filter_value]
-
-    raise Exception("How did you get down here?")
+        i += 1
+    return next(iter(data), None)
 
 
 def part_1(data: Data):
