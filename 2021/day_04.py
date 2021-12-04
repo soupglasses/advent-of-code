@@ -27,6 +27,7 @@ def parse_file(path: str) -> Data:
 def transpose(lst: list) -> list:
     return list(zip(*lst))
 
+
 def flatten(lst: list) -> list:
     return [item for sublist in lst for item in sublist]
 
@@ -53,6 +54,11 @@ def find_bingo_winner(
 
 
 def part_1(bingo_numbers: BingoNumbers, boards: list[Board]):
+    """
+    To guarantee victory against the giant squid, figure out which
+    board will win first. What will your final score be if you choose
+    that board?
+    """
     winning_boards = find_bingo_winner(bingo_numbers, boards)
 
     if not winning_boards:
@@ -64,6 +70,10 @@ def part_1(bingo_numbers: BingoNumbers, boards: list[Board]):
 
 
 def part_2(bingo_numbers: BingoNumbers, boards: list[Board]):
+    """
+    Figure out which board will win last. Once it wins, what would its
+    final score be?
+    """
     winning_boards = find_bingo_winner(bingo_numbers, boards)
 
     if not winning_boards:
