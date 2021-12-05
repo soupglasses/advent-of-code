@@ -79,22 +79,14 @@ def plot_line(x_0: int, y_0: int, x_1: int, y_1: int) -> list[tuple[int, int]]:
     return plot_line_high(x_0, y_0, x_1, y_1)
 
 
-def plot_line_on_array(arr: np.ndarray, x_0, y_0, x_1, y_1) -> np.ndarray:
-    points = plot_line(x_0, y_0, x_1, y_1)
-    for x, y in points:
-        arr[y][x] += 1
-    return arr
-
-
 def plot_intercetions(data: Data) -> int:
     max_size = int(data.max()) + 1
     diagram = np.zeros((max_size, max_size), dtype=int)
 
-    # So, this is a bit slow. As im doing it all trough python's own functions.
-    # Im not 100% sure which part slows it down the most, but that is a problem
-    # for future me.
-    for coords in data:
-        diagram += plot_line_on_array(np.zeros_like(diagram), *coords[0], *coords[1])
+    for ((x_0, y_0), (x_1, y_1)) in data:
+        points = plot_line(x_0, y_0, x_1, y_1)
+        for x, y in points:
+            diagram[y][x] += 1
 
     return (diagram > 1).sum()
 
