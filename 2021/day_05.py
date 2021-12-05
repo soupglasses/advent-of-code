@@ -100,9 +100,8 @@ def plot_intercetions(data: Data) -> int:
 
 
 def part_1(data: Data) -> int:
-    # I can probably find a numpy command to do this,
-    # but i am still a beginner to numpy as a libary.
-    # So im just using list comprehension for filtering.
+    # I can probably find a numpy command to do this, but i am still a beginner
+    # to numpy as a libary. So im just using list comprehension for filtering.
     return plot_intercetions(
         np.array(
             [((a, b), (c, d)) for ((a, b), (c, d)) in data if a == c or b == d],
