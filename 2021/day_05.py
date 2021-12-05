@@ -3,8 +3,11 @@ Day 5: Hydrothermal Venture
 
 https://adventofcode.com/2021/day/5
 """
+from typing import Generator
+
 import numpy as np
 
+Point = tuple[int, int]
 Data = np.ndarray
 
 
@@ -22,7 +25,9 @@ def parse_file(path: str) -> Data:
     )
 
 
-def plot_line_low(x_0: int, y_0: int, x_1: int, y_1: int) -> list[tuple[int, int]]:
+def plot_line_low(
+    x_0: int, y_0: int, x_1: int, y_1: int
+) -> Generator[Point, None, None]:
     d_x = x_1 - x_0
     d_y = y_1 - y_0
     y_i = 1
@@ -32,18 +37,19 @@ def plot_line_low(x_0: int, y_0: int, x_1: int, y_1: int) -> list[tuple[int, int
     D = (2 * d_y) - d_x
     y = y_0
 
-    res = []
     for x in range(x_0, x_1 + 1):
-        res.append((x, y))
+        yield (x, y)
+
         if D > 0:
             y = y + y_i
             D = D + (2 * (d_y - d_x))
         else:
             D = D + 2 * d_y
-    return res
 
 
-def plot_line_high(x_0: int, y_0: int, x_1: int, y_1: int) -> list[tuple[int, int]]:
+def plot_line_high(
+    x_0: int, y_0: int, x_1: int, y_1: int
+) -> Generator[Point, None, None]:
     d_x = x_1 - x_0
     d_y = y_1 - y_0
     x_i = 1
@@ -53,18 +59,19 @@ def plot_line_high(x_0: int, y_0: int, x_1: int, y_1: int) -> list[tuple[int, in
     D = (2 * d_x) - d_y
     x = x_0
 
-    res = []
     for y in range(y_0, y_1 + 1):
-        res.append((x, y))
+        yield (x, y)
+
         if D > 0:
             x = x + x_i
             D = D + (2 * (d_x - d_y))
         else:
             D = D + 2 * d_x
-    return res
 
 
-def plot_line(x_0: int, y_0: int, x_1: int, y_1: int) -> list[tuple[int, int]]:
+def plot_line(
+    x_0: int, y_0: int, x_1: int, y_1: int
+) -> Generator[Point, None, None]:
     """
     Python implementation of the Bresenham's line algorithm.
 
@@ -84,8 +91,7 @@ def intercetions(data: Data) -> np.ndarray:
     diagram = np.zeros((max_size, max_size), dtype=int)
 
     for ((x_0, y_0), (x_1, y_1)) in data:
-        points = plot_line(x_0, y_0, x_1, y_1)
-        for x, y in points:
+        for x, y in plot_line(x_0, y_0, x_1, y_1):
             diagram[y][x] += 1
 
     return diagram
