@@ -79,7 +79,7 @@ def plot_line(x_0: int, y_0: int, x_1: int, y_1: int) -> list[tuple[int, int]]:
     return plot_line_high(x_0, y_0, x_1, y_1)
 
 
-def plot_intercetions(data: Data) -> int:
+def plot_intercetions(data: Data) -> np.ndarray:
     max_size = int(data.max()) + 1
     diagram = np.zeros((max_size, max_size), dtype=int)
 
@@ -88,7 +88,7 @@ def plot_intercetions(data: Data) -> int:
         for x, y in points:
             diagram[y][x] += 1
 
-    return (diagram > 1).sum()
+    return diagram
 
 
 def part_1(data: Data) -> int:
@@ -98,12 +98,12 @@ def part_1(data: Data) -> int:
     """
     # I can probably find a numpy command to do this, but i am still a beginner
     # to numpy as a libary. So im just using list comprehension for filtering.
-    return plot_intercetions(
-        np.array(
-            [((a, b), (c, d)) for ((a, b), (c, d)) in data if a == c or b == d],
-            dtype=int,
-        )
+    filtered_data = np.array(
+        [((a, b), (c, d)) for ((a, b), (c, d)) in data if a == c or b == d],
+        dtype=int,
     )
+
+    return (plot_intercetions(filtered_data) > 1).sum()
 
 
 def part_2(data: Data):
@@ -111,7 +111,7 @@ def part_2(data: Data):
     Consider all of the lines. At how many points do at least two lines
     overlap?
     """
-    return plot_intercetions(data)
+    return (plot_intercetions(data) > 1).sum()
 
 
 def main():
