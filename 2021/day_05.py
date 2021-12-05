@@ -1,5 +1,5 @@
 """
-Day 5:
+Day 5: Hydrothermal Venture
 
 https://adventofcode.com/2021/day/5
 """
@@ -116,7 +116,6 @@ def part_2(data: Data):
 
 def main():
     data = parse_file("inputs/input_05.txt")
-    print(data)
 
     print("Part 1", part_1(data))
     print("Part 2", part_2(data))
