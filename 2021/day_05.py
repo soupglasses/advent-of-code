@@ -72,10 +72,10 @@ def plot_line(x_0: int, y_0: int, x_1: int, y_1: int) -> list[tuple[int, int]]:
     """
     if abs(y_1 - y_0) < abs(x_1 - x_0):
         if x_0 > x_1:
-            return plot_line_low(x_1, y_1, x_0, y_0)
+            x_1, y_1, x_0, y_0 = x_0, y_0, x_1, y_1
         return plot_line_low(x_0, y_0, x_1, y_1)
     if y_0 > y_1:
-        return plot_line_high(x_1, y_1, x_0, y_0)
+        x_1, y_1, x_0, y_0 = x_0, y_0, x_1, y_1
     return plot_line_high(x_0, y_0, x_1, y_1)
 
 
