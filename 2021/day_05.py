@@ -92,6 +92,10 @@ def plot_intercetions(data: Data) -> int:
 
 
 def part_1(data: Data) -> int:
+    """
+    Consider only horizontal and vertical lines. At how many points do
+    at least two lines overlap?
+    """
     # I can probably find a numpy command to do this, but i am still a beginner
     # to numpy as a libary. So im just using list comprehension for filtering.
     return plot_intercetions(
@@ -103,6 +107,10 @@ def part_1(data: Data) -> int:
 
 
 def part_2(data: Data):
+    """
+    Consider all of the lines. At how many points do at least two lines
+    overlap?
+    """
     return plot_intercetions(data)
 
 
