@@ -20,11 +20,13 @@ def growth_over(data: Data, days: int) -> int:
     # list. Also making space for newborns at the end of the list.
     fishes = [data.count(i) for i in range(9)]
     for _ in range(days):
-        # Take the amount of fish at "day 0" out of our list.
+        # Take the amount of fish at "day 0" out of our list. This also
+        # shifts all fish one day forwards.
         reproducing_fish = fishes.pop(0)
-        # Add them back in to "day 6" as fish live forever.
+        # Add them back to "day 6" of the cycle as fish live forever.
         fishes[6] += reproducing_fish
-        # Add the new fish that were born to "day 8".
+        # And finally add the new fish that were born to the end, ala
+        # "day 8".
         fishes.append(reproducing_fish)
 
     return sum(fishes)
