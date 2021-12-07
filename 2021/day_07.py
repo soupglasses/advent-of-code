@@ -43,7 +43,7 @@ def gss(f: Callable, a: Number, b: Number, lim: Number) -> Number:
     return (b + a) / 2
 
 
-def linear_cost(point: int, offset: Number) -> Number:
+def linear_cost(point: Number, offset: Number) -> Number:
     return abs(point - offset)
 
 
