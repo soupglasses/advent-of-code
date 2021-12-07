@@ -3,8 +3,14 @@ Day 7: Treachery of Whales
 
 https://adventofcode.com/2021/day/7
 """
+import math
+from functools import partial
+from typing import Callable, Union
 
 Data = list[int]
+Number = Union[int, float]
+
+gr = (math.sqrt(5) + 1) / 2  # The golden ratio
 
 
 def parse_file(path: str) -> Data:
@@ -14,24 +20,57 @@ def parse_file(path: str) -> Data:
     return data
 
 
-def calculate_cost(data: Data, pos: int) -> int:
-    cost = 0
-    for point in data:
-        # fuel spent is the same as distance travelled
-        cost += abs(point - pos)
+def gss(f: Callable, a: Number, b: Number, lim: Number) -> Number:
+    """
+    Golden-section search.
 
-    return cost
+    Efficently find an extremum from a given function
+    inside of a specified interval, [a, b].
+
+    https://en.wikipedia.org/wiki/Golden-section_search
+    """
+    c = b - (b - a) / gr
+    d = a + (b - a) / gr
+    while abs(b - a) > lim:
+        if f(c) < f(d):
+            b = d
+        else:
+            a = c
+
+        c = b - (b - a) / gr
+        d = a + (b - a) / gr
+
+    return (b + a) / 2
 
 
-def calculate_cost_2(data: Data, pos: int) -> int:
-    # TODO: Find a way to add this into a single calculate_cost function.
-    cost = 0
-    for point in data:
-        # fuel spent is the triangle number of the distance
-        steps = abs(point - pos)
-        cost += (steps ** 2 + steps) // 2
+def linear_cost(point: int, offset: Number) -> Number:
+    return abs(point - offset)
 
-    return cost
+
+def exponential_cost(point: Number, offset: Number) -> Number:
+    steps = abs(point - offset)
+    return (steps ** 2 + steps) / 2
+
+
+def calculate_cost(func: Callable, data: Data, pos: Number) -> int:
+    """
+    Calculate the value of a given position by a defined
+    function for cost.
+    """
+    return round(sum(func(point, pos) for point in data))
+
+
+def solve(func, data: Data) -> int:
+    # Golden ratio search requires a single argument function.
+    # So im doing partial application of the function i want the
+    # search to happen on.
+    crab_cost_func = partial(calculate_cost, func, data)
+    # We can set the limit to 1, as we are looking for the closest
+    # integer instead of the true minimum.
+    pos = gss(crab_cost_func, a=min(data), b=max(data), lim=1)
+    # Rounding the position to the nearest integer per the tasks
+    # definition of our minimum.
+    return calculate_cost(func, data, round(pos))
 
 
 def part_1(data: Data):
@@ -40,15 +79,7 @@ def part_1(data: Data):
     the least fuel possible so they can make you an escape route! How
     much fuel must they spend to align to that position?
     """
-    # Now both part one and two are extremely inefficient. As im just
-    # bruteforcing all possible posisions on the curve before doing a
-    # min scan over that. I could easily implement an algorithmn or
-    # similar that would see when it each side becomes more expensive
-    # and return the lowest number it can find. But im short on time
-    # for today, and the 2nd part only really takes a second to run
-    # this way. So its not *needed* to do.
-    positions = [calculate_cost(data, pos) for pos in range(len(data))]
-    return min(positions)
+    return solve(linear_cost, data)
 
 
 def part_2(data: Data):
@@ -57,8 +88,7 @@ def part_2(data: Data):
     the least fuel possible. How much fuel must they spend to align to
     that position?
     """
-    positions = [calculate_cost_2(data, pos) for pos in range(len(data))]
-    return min(positions)
+    return solve(exponential_cost, data)
 
 
 def main():
