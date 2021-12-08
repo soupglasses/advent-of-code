@@ -78,7 +78,7 @@ def part_2(data: Data):
 
 
 def main():
-    data = parse_file("inputs/input_03.txt")
+    data = parse_file("inputs/example_03.txt")
 
     print("Part 1", part_1(data))
     print("Part 2", part_2(data))

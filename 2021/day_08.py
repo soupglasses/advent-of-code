@@ -20,7 +20,7 @@ def decode_num(positions: list[str], display: list[str]) -> int:
     number = ""
     for encoded_number in map(set, display):
         match (
-           # Toal unique lit cells in the 7 segment display
+           # Total unique lit cells in the 7 segment display
            len(encoded_number),
            # Count of lit cells that share a position with the number 4
            len(encoded_number & segments[4]),
@@ -67,7 +67,7 @@ def part_2(data: Data) -> int:
 
 
 def main():
-    data = parse_file("inputs/input_08.txt")
+    data = parse_file("inputs/example_08.txt")
 
     print("Part 1", part_1(data))
     print("Part 2", part_2(data))
