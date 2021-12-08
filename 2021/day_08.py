@@ -1,3 +1,4 @@
+#!/usr/bin/env python3.10
 """
 Day 8: Seven Segment Search
 

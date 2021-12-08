@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Day 7: Treachery of Whales
 
