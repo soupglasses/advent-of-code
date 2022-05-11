@@ -1,3 +1,21 @@
+import sys
+from typing import Optional
+
+def parse_data(path: Optional[str]):
+    if not sys.stdin.isatty():
+        raw = sys.stdin.read()
+    else:
+        if path:
+            with open(path, encoding="utf-8") as f:
+                raw = f.read()
+        else:
+            sys.exit("No stdin data was recived.")
+
+    data = [(line.split()[0], int(line.split()[1]))
+            for line in raw.splitlines()]
+    return data
+
+
 def stop_at_recursion(stepper):
     def stepper_wrapper(prog: list, step: int = 0, acc: int = 0):
         steps = set()
@@ -13,6 +31,7 @@ def stop_at_recursion(stepper):
         return run
     return stepper_wrapper
 
+
 @stop_at_recursion
 def stepper(prog: list, step: int, acc: int):
     op, i = prog[step]
@@ -23,11 +42,13 @@ def stepper(prog: list, step: int, acc: int):
     elif op == 'jmp':
         return {'prog': prog, 'step': step + i, 'acc': acc}
 
+
 def generate_deltas(prog: list) -> list:
     return [(step, 'jmp', i) if op == 'nop'
             else (step, 'nop', i)
             for step, (op, i) in enumerate(prog)
             if op in ('jmp', 'nop')]
+
 
 def part_2(prog: list, prog_deltas: list):
     prog = list(prog)
@@ -41,9 +62,7 @@ def part_2(prog: list, prog_deltas: list):
 
 
 if __name__ == '__main__':
-    with open('input.txt', 'r') as f:
-        program = [(line.split()[0], int(line.split()[1]))
-                   for line in f.read().splitlines()]
+    program = parse_data("inputs/example_08.txt")
 
     print('A1:', stepper(program)['acc'])
 

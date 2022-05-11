@@ -1,5 +1,7 @@
-from functools import partial
 import re
+import sys
+from functools import partial
+from typing import Optional 
 
 FIELDS = {'byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'}
 VALID_EYE_COLORS = {'amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'}
@@ -11,9 +13,20 @@ RE_PID = re.compile('^[0-9]{9}$')
 def parse_passport(raw_passport: str) -> dict:
     return dict(field.split(':') for field in raw_passport.split())
 
-def parse_passports(raw_passports: str) -> list[dict]:
-    return [parse_passport(raw_passport)
-            for raw_passport in raw_passports.split('\n\n')]
+
+def parse_data(path: Optional[str]):
+    if not sys.stdin.isatty():
+        raw = sys.stdin.read()
+    else:
+        if path:
+            with open(path, encoding="utf-8") as f:
+                raw = f.read()
+        else:
+            sys.exit("No stdin data was recived.")
+
+    data = [parse_passport(raw_passport)
+            for raw_passport in raw.split('\n\n')]
+    return data
 
 
 def validate_year(year: str, low: int, high: int) -> bool:
@@ -65,8 +78,7 @@ def validate_passport(passport: dict) -> bool:
 
 
 if __name__ == '__main__':
-    with open('input.txt', 'r') as f:
-        passports = parse_passports(f.read())
+    passports = parse_data("inputs/example_04.txt")
 
     print('Q1:', 'In your batch file, how many passports are valid?',
           'Treat cid as optional.')

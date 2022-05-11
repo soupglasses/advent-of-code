@@ -1,4 +1,23 @@
+import sys
 import turtle
+from typing import Optional
+
+
+def parse_data(path: Optional[str]):
+    if not sys.stdin.isatty():
+        raw = sys.stdin.read()
+    else:
+        if path:
+            with open(path, encoding="utf-8") as f:
+                raw = f.read()
+        else:
+            sys.exit("No stdin data was recived.")
+
+    data = [(line[0], int(line[1:]))
+            for line in raw.splitlines()]
+    return data
+
+
 
 DIRECTIONS = {'N': 90, 'S': 270, 'E': 0, 'W': 180}
 
@@ -28,9 +47,7 @@ if __name__ == '__main__':
     turtle.tracer(False)           # disable screen refresh
     turtle.screensize(4000, 4000)  # allow scrolling canvas
 
-    with open('input.txt', 'r') as f:
-        instructions = [(line[0], int(line[1:]))
-                        for line in f.read().splitlines()]
+    instructions = parse_data("inputs/example_12.txt")
 
     for action, value in instructions:
         do_action(action, value)

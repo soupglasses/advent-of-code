@@ -1,4 +1,27 @@
+import sys
 from itertools import product
+from typing import Optional
+
+
+def parse_data(path: Optional[str]):
+    if not sys.stdin.isatty():
+        raw = sys.stdin.read()
+    else:
+        if path:
+            with open(path, encoding="utf-8") as f:
+                raw = f.read()
+        else:
+            sys.exit("No stdin data was recived.")
+
+    t = str.maketrans({"[": "", "]": "", " ": "", "m": "", "e": ""})
+    lstdata = [
+        match.translate(t).strip().split("\n")
+        for match in raw.split("mask = ")
+    ]
+    data = []
+    for mask, *mem in lstdata:
+        data.append((mask, list(tuple(map(int, line.split("="))) for line in mem)))
+    return data
 
 
 def set_bit(num: int, offset: int):
@@ -58,21 +81,8 @@ def part2(data):
     return sum(full_mem.values())
 
 
-def parse_input(file_name: str):
-    with open(file_name) as f:
-        t = str.maketrans({"[": "", "]": "", " ": "", "m": "", "e": ""})
-        lstdata = [
-            match.translate(t).strip().split("\n")
-            for match in f.read().split("mask = ")
-        ]
-        data = []
-        for mask, *mem in lstdata:
-            data.append((mask, list(tuple(map(int, line.split("="))) for line in mem)))
-    return data
-
-
 def main():
-    data = parse_input("input.txt")
+    data = parse_data("inputs/example_14.txt")
     print("Part 1:", part1(data))
     print("Part 2:", part2(data))
 

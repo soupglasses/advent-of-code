@@ -26,7 +26,7 @@ def part_2(adapters: list[int], s_pos: int):
 
 
 if __name__ == '__main__':
-    with open('input.txt', 'r') as f:
+    with open('inputs/example_10.txt', 'r') as f:
         adapters = [int(i) for i in f.read().splitlines()]
 
     adapters = [0] + sorted(adapters) + [max(adapters) + 3]

@@ -1,6 +1,22 @@
 import re
+import sys
+from typing import Optional 
+
 
 PATTERN = re.compile(r'(^\d+)-(\d+) (\w): (.+)', re.MULTILINE)
+
+def parse_data(path: Optional[str]):
+    if not sys.stdin.isatty():
+        raw = sys.stdin.read()
+    else:
+        if path:
+            with open(path, encoding="utf-8") as f:
+                raw = f.read()
+        else:
+            sys.exit("No stdin data was recived.")
+
+    data = PATTERN.findall(raw)
+    return data
 
 
 def valid_password_by_letters(low: int, high: int,
@@ -13,8 +29,7 @@ def valid_password_by_pos(low: int, high: int,
 
 
 if __name__ == '__main__':
-    with open('input.txt', 'r') as f:
-        passwords = PATTERN.findall(f.read())
+    passwords = parse_data("inputs/example_02.txt")
 
     print("Q1:", "How many passwords are valid according to their policies?")
     print("A1:", sum(

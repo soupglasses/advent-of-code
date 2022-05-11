@@ -1,7 +1,21 @@
+import sys
 from math import prod
+from typing import Optional 
 
 SLOPES = ((1, 1), (3, 1), (5, 1), (7, 1), (1, 2))
 
+def parse_data(path: Optional[str]):
+    if not sys.stdin.isatty():
+        raw = sys.stdin.read()
+    else:
+        if path:
+            with open(path, encoding="utf-8") as f:
+                raw = f.read()
+        else:
+            sys.exit("No stdin data was recived.")
+
+    data = raw.splitlines()
+    return data
 
 def count_trees(grid: list, right: int, down: int) -> int:
     trees = 0
@@ -17,8 +31,7 @@ def prod_from_slopes(grid: list, slopes: tuple) -> int:
 
 
 if __name__ == '__main__':
-    with open('input.txt', 'r') as f:
-        grid_map = f.read().splitlines()
+    grid_map = parse_data("inputs/example_03.txt")
 
     print('Q1:', 'Starting at the top-left corner of your map and following',
           'a slope of right 3 and down 1, how many trees would you encounter?')

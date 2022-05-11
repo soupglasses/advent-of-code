@@ -1,4 +1,23 @@
+import sys
+from typing import Optional
+
 from sympy.ntheory.modular import crt
+
+
+def parse_data(path: Optional[str]):
+    if not sys.stdin.isatty():
+        raw = sys.stdin.read()
+    else:
+        if path:
+            with open(path, encoding="utf-8") as f:
+                raw = f.read()
+        else:
+            sys.exit("No stdin data was recived.")
+
+    data = raw.splitlines()
+    return data
+
+
 
 with open('input.txt', 'r') as f:
     bus_ids = f.read().replace('x','0').split('\n')
@@ -6,8 +25,7 @@ with open('input.txt', 'r') as f:
     busses = list(map(int, bus_ids[1].split(',')))
 
 def parse_raw():
-    with open("input.txt") as f:
-        departure_time, ids = f.read().splitlines()
+    departure_time, ids = parse_data("inputs/example_13.txt")
     moduli = []
     residues = []
     for residue, modulus in enumerate(ids.split(",")):

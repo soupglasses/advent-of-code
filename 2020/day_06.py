@@ -1,3 +1,21 @@
+import sys
+from typing import Optional
+
+def parse_data(path: Optional[str]):
+    if not sys.stdin.isatty():
+        raw = sys.stdin.read()
+    else:
+        if path:
+            with open(path, encoding="utf-8") as f:
+                raw = f.read()
+        else:
+            sys.exit("No stdin data was recived.")
+
+    data = raw.split('\n\n')
+    return data
+
+
+
 def count_any(groups: list[str]) -> int:
     return sum(
         len(set(''.join(group.split())))
@@ -12,8 +30,7 @@ def count_all(groups: list[str]) -> int:
 
 
 if __name__ == '__main__':
-    with open('input.txt', 'r') as f:
-        forms = f.read().split('\n\n')
+    forms = parse_data("inputs/example_06.txt")
 
     print('Q1:', 'For each group, count the number of questions to which',
           'anyone answered "yes". What is the sum of those counts?')

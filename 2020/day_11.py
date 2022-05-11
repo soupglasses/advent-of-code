@@ -1,6 +1,24 @@
+import sys
+from typing import Optional
+
+
 NEIGHBOURS = ((-1, -1), (-1, 0), (-1, 1),
               ( 0, -1),          ( 0, 1),
               ( 1, -1), ( 1, 0), ( 1, 1))
+
+
+def parse_data(path: Optional[str]):
+    if not sys.stdin.isatty():
+        raw = sys.stdin.read()
+    else:
+        if path:
+            with open(path, encoding="utf-8") as f:
+                raw = f.read()
+        else:
+            sys.exit("No stdin data was recived.")
+
+    data = [list(line) for line in raw.splitlines()]
+    return data
 
 
 def get_neighbours_simple(i: int, y: int, lst: list):
@@ -65,8 +83,7 @@ def find_equilibrium_str(seating: list, tolerance: int) -> str:
 
 
 if __name__ == '__main__':
-    with open('input.txt', 'r') as f:
-        seats = [list(line) for line in f.read().splitlines()]
+    seats = parse_data("inputs/example_11.txt")
 
     print('A1:', find_equilibrium_str(seats, 4).count('#'))
 

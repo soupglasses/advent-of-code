@@ -1,4 +1,21 @@
+import sys
+from typing import Optional
+
 BP_BINARY = str.maketrans('FLBR', '0011')
+
+
+def parse_data(path: Optional[str]):
+    if not sys.stdin.isatty():
+        raw = sys.stdin.read()
+    else:
+        if path:
+            with open(path, encoding="utf-8") as f:
+                raw = f.read()
+        else:
+            sys.exit("No stdin data was recived.")
+
+    data = raw.splitlines()
+    return data
 
 
 def seat_pos(board_pass: str) -> int:
@@ -13,8 +30,7 @@ def find_missing(lst: list) -> int:
 
 
 if __name__ == '__main__':
-    with open('input.txt', 'r') as f:
-        boarding_passes = f.read().splitlines()
+    boarding_passes = parse_data("inputs/example_05.txt")
 
     taken_seat_ids = [seat_id(board_pass) for board_pass in boarding_passes]
 

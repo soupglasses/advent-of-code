@@ -8,13 +8,13 @@ from typing import Optional
 
 Data = list[str]
 
-def parse_data(path: Optional[str]) -> Data:
+def parse_data(path: Optional[str]):
     if not sys.stdin.isatty():
-        raw = sys.stdin.readlines()
+        raw = sys.stdin.read()
     else:
         if path:
             with open(path, encoding="utf-8") as f:
-                raw = f.readlines()
+                raw = f.read()
         else:
             sys.exit("No stdin data was recived.")
 

@@ -1,4 +1,20 @@
+import sys
 from itertools import combinations
+from typing import Optional
+
+
+def parse_data(path: Optional[str]):
+    if not sys.stdin.isatty():
+        raw = sys.stdin.read()
+    else:
+        if path:
+            with open(path, encoding="utf-8") as f:
+                raw = f.read()
+        else:
+            sys.exit("No stdin data was recived.")
+
+    data = [int(i) for i in raw.splitlines()]
+    return data
 
 
 def encoding_valid(num: int, chunk: list[int]):
@@ -21,8 +37,7 @@ def break_encryption(xmas: list[int], bad_val: int):
 
 
 if __name__ == '__main__':
-    with open('input.txt', 'r') as f:
-        xmas = [int(i) for i in f.read().splitlines()]
+    xmas = parse_data("inputs/example_09.txt")
 
     bad_val = find_bad_val(xmas, 25)
     print('A1:', bad_val)

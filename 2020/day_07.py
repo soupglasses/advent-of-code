@@ -1,20 +1,28 @@
 import re
+import sys
+from typing import Optional
 
 RE_BAG_RULES = re.compile(r'(\d+) (\w+ \w+)')
 
 
-def parse(raw_rules: str) -> dict[str, list]:
-    """Returns a dictionary with keys of the bag's color and a list with
-    tuples containing the rules that the bag needs to follow.
-    """
-    rules = {}
+def parse_data(path: Optional[str]):
+    if not sys.stdin.isatty():
+        raw = sys.stdin.read()
+    else:
+        if path:
+            with open(path, encoding="utf-8") as f:
+                raw = f.read()
+        else:
+            sys.exit("No stdin data was recived.")
+
+    data = {}
     raw_rules_split = [rule.split(' contain ')
-                       for rule in raw_rules.splitlines()]
+                       for rule in raw.splitlines()]
     for left, right in raw_rules_split:
         bag = left.replace(' bags', '')
         bag_rules = RE_BAG_RULES.findall(right)
-        rules[bag] = [(int(count), color) for count, color in bag_rules]
-    return rules
+        data[bag] = [(int(count), color) for count, color in bag_rules]
+    return data
 
 def bags_containing_bag(bag: str, rules: dict[str, list]) -> int:
     """Returns the bags that have bag in their rules."""
@@ -45,8 +53,7 @@ def required_bags(bag: str, count: int, rules: dict[str, list]) -> int:
 
 
 if __name__ == '__main__':
-    with open('input.txt', 'r') as f:
-        rules = parse(f.read())
+    rules = parse_data("inputs/input_07.txt")
 
     print('Q1:', 'How many bag colors can eventually contain at least one',
           'shiny gold bag?')

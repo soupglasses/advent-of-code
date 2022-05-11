@@ -1,4 +1,22 @@
 import turtle
+import sys
+from typing import Optional
+
+
+def parse_data(path: Optional[str]):
+    if not sys.stdin.isatty():
+        raw = sys.stdin.read()
+    else:
+        if path:
+            with open(path, encoding="utf-8") as f:
+                raw = f.read()
+        else:
+            sys.exit("No stdin data was recived.")
+
+    data = [(line[0], int(line[1:]))
+            for line in raw.splitlines()]
+    return data
+
 
 def rel_pos():
     return [x1 - x2 for (x1, x2) in zip(waypoint.pos(), ship.pos())]
@@ -60,9 +78,7 @@ waypoint.clear()
 ship.speed(0)
 
 if __name__ == '__main__':
-    with open('input.txt', 'r') as f:
-        instructions = [(line[0], int(line[1:]))
-                        for line in f.read().splitlines()]
+    instructions = parse_data("inputs/example_12.txt")
 
     for action, value in instructions:
         do_action(action, value)
