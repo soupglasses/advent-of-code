@@ -4,7 +4,8 @@ Day 5: Hydrothermal Venture
 
 https://adventofcode.com/2021/day/5
 """
-from typing import Generator
+import sys
+from typing import Generator, Optional
 
 import numpy as np
 
@@ -16,10 +17,18 @@ def coords_to_tuple(bytes_: bytes) -> tuple[int, ...]:
     # bytes given as 'latin1' from numpy.loadtxt
     return tuple(int(i) for i in bytes_.decode("latin1").split(","))
 
+def parse_data(path: Optional[str]) -> Data:
+    if not sys.stdin.isatty():
+        raw = sys.stdin.readlines()
+    else:
+        if path:
+            with open(path, encoding="utf-8") as f:
+                raw = f.readlines()
+        else:
+            sys.exit("No stdin data was recived.")
 
-def parse_file(path: str) -> Data:
     return np.loadtxt(
-        path,
+        raw,
         converters={0: coords_to_tuple, 1: coords_to_tuple},
         dtype=int,
         delimiter=" -> ",
@@ -122,7 +131,7 @@ def part_2(data: Data):
 
 
 def main():
-    data = parse_file("inputs/example_05.txt")
+    data = parse_data("inputs/example_05.txt")
 
     print("Part 1", part_1(data))
     print("Part 2", part_2(data))

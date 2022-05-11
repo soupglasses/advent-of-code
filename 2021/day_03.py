@@ -4,15 +4,22 @@ Day 3: Binary Diagnostic
 
 https://adventofcode.com/2021/day/3
 """
-from typing import Union
+import sys
+from typing import Optional, Union
 
 Data = list[str]
 
+def parse_data(path: Optional[str]) -> Data:
+    if not sys.stdin.isatty():
+        raw = sys.stdin.readlines()
+    else:
+        if path:
+            with open(path, encoding="utf-8") as f:
+                raw = f.readlines()
+        else:
+            sys.exit("No stdin data was recived.")
 
-def parse_file(path: str) -> Data:
-    with open(path) as f:
-        raw = f.read().splitlines()
-        data = raw
+    data = raw
     return data
 
 
@@ -78,7 +85,7 @@ def part_2(data: Data):
 
 
 def main():
-    data = parse_file("inputs/example_03.txt")
+    data = parse_data("inputs/example_03.txt")
 
     print("Part 1", part_1(data))
     print("Part 2", part_2(data))

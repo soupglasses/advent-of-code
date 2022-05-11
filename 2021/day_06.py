@@ -4,14 +4,22 @@ Day 6: Lanternfish
 
 https://adventofcode.com/2021/day/6
 """
+import sys
+from typing import Optional
 
 Data = list[int]
 
+def parse_data(path: Optional[str]) -> Data:
+    if not sys.stdin.isatty():
+        raw = sys.stdin.readlines()
+    else:
+        if path:
+            with open(path, encoding="utf-8") as f:
+                raw = f.readlines()
+        else:
+            sys.exit("No stdin data was recived.")
 
-def parse_file(path: str) -> Data:
-    with open(path) as f:
-        raw = f.read().splitlines()
-        data = list(map(int, raw[0].split(",")))
+    data = list(map(int, raw[0].split(",")))
     return data
 
 
@@ -48,7 +56,7 @@ def part_2(data: Data) -> int:
 
 
 def main():
-    data = parse_file("inputs/example_06.txt")
+    data = parse_data("inputs/example_06.txt")
 
     print("Part 1", part_1(data))
     print("Part 2", part_2(data))

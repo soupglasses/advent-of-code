@@ -5,19 +5,27 @@ Day 7: Treachery of Whales
 https://adventofcode.com/2021/day/7
 """
 import math
+import sys
 from functools import partial
-from typing import Callable, Union
+from typing import Callable, Optional, Union
 
 Data = list[int]
 Number = Union[int, float]
 
-gr = (math.sqrt(5) + 1) / 2  # The golden ratio
+GR = (math.sqrt(5) + 1) / 2  # The golden ratio
 
 
-def parse_file(path: str) -> Data:
-    with open(path) as f:
-        raw = f.read().splitlines()
-        data = sorted(list(map(int, raw[0].split(","))))
+def parse_data(path: Optional[str]) -> Data:
+    if not sys.stdin.isatty():
+        raw = sys.stdin.readlines()
+    else:
+        if path:
+            with open(path, encoding="utf-8") as f:
+                raw = f.readlines()
+        else:
+            sys.exit("No stdin data was recived.")
+
+    data = sorted(list(map(int, raw[0].split(","))))
     return data
 
 
@@ -30,16 +38,16 @@ def gss(f: Callable, a: Number, b: Number, lim: Number) -> Number:
 
     https://en.wikipedia.org/wiki/Golden-section_search
     """
-    c = b - (b - a) / gr
-    d = a + (b - a) / gr
+    c = b - (b - a) / GR
+    d = a + (b - a) / GR
     while abs(b - a) > lim:
         if f(c) < f(d):
             b = d
         else:
             a = c
 
-        c = b - (b - a) / gr
-        d = a + (b - a) / gr
+        c = b - (b - a) / GR
+        d = a + (b - a) / GR
 
     return (b + a) / 2
 
@@ -93,7 +101,7 @@ def part_2(data: Data):
 
 
 def main():
-    data = parse_file("inputs/example_07.txt")
+    data = parse_data("inputs/example_07.txt")
 
     print("Part 1", part_1(data))
     print("Part 2", part_2(data))

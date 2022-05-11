@@ -5,6 +5,8 @@ Day 4: Giant Squid
 https://adventofcode.com/2021/day/4
 """
 import re
+import sys
+from typing import Optional
 
 BingoNumbers = list[int]
 Board = list[tuple[int, ...]]
@@ -12,16 +14,22 @@ Data = tuple[BingoNumbers, list[Board]]
 
 RE_LINE = re.compile(r"^ ?(\d+) {1,2}(\d+) {1,2}(\d+) {1,2}(\d+) {1,2}(\d+)$")
 
+def parse_data(path: Optional[str]) -> Data:
+    if not sys.stdin.isatty():
+        raw = sys.stdin.readlines()
+    else:
+        if path:
+            with open(path, encoding="utf-8") as f:
+                raw = f.readlines()
+        else:
+            sys.exit("No stdin data was recived.")
 
-def parse_file(path: str) -> Data:
-    with open(path) as f:
-        raw = f.read().splitlines()
-        bingo_numbers = list(map(int, raw[0].split(",")))
-        boards = [raw[i : i + 5] for i in range(2, len(raw), 6)]
-        boards = [
-            [tuple(int(match) for match in RE_LINE.findall(line)[0]) for line in board]
-            for board in boards
-        ]
+    bingo_numbers = list(map(int, raw[0].split(",")))
+    boards = [raw[i : i + 5] for i in range(2, len(raw), 6)]
+    boards = [
+        [tuple(int(match) for match in RE_LINE.findall(line)[0]) for line in board]
+        for board in boards
+    ]
     return bingo_numbers, boards
 
 
@@ -86,7 +94,7 @@ def part_2(bingo_numbers: BingoNumbers, boards: list[Board]):
 
 
 def main():
-    bingo_nums, boards = parse_file("inputs/example_04.txt")
+    bingo_nums, boards = parse_data("inputs/example_04.txt")
 
     print("Part 1", part_1(bingo_nums, boards))
     print("Part 2", part_2(bingo_nums, boards))
