@@ -6,12 +6,13 @@ Day 1: Sonar Sweep
 
 https://adventofcode.com/2021/day/1
 """
+from typing import Optional
 import operator
 
 Data = list[int]
 
 
-def parse_data(path: None) -> Data:
+def parse_data(path: Optional[str]) -> Data:
     if not sys.stdin.isatty():
         raw = sys.stdin.readlines()
     else:
@@ -46,8 +47,8 @@ def part_2(data: Data) -> int:
 def main():
     data = parse_data("inputs/example_01.txt")
 
-    print("Part 1:", part_1(data))
-    print("Part 2:", part_2(data))
+    print(part_1(data))
+    print(part_2(data))
 
 
 if __name__ == "__main__":

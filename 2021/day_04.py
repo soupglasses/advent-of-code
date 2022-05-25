@@ -96,8 +96,8 @@ def part_2(bingo_numbers: BingoNumbers, boards: list[Board]):
 def main():
     bingo_nums, boards = parse_data("inputs/example_04.txt")
 
-    print("Part 1", part_1(bingo_nums, boards))
-    print("Part 2", part_2(bingo_nums, boards))
+    print(part_1(bingo_nums, boards))
+    print(part_2(bingo_nums, boards))
 
 
 if __name__ == "__main__":

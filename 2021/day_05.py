@@ -133,8 +133,8 @@ def part_2(data: Data):
 def main():
     data = parse_data("inputs/example_05.txt")
 
-    print("Part 1", part_1(data))
-    print("Part 2", part_2(data))
+    print(part_1(data))
+    print(part_2(data))
 
 
 if __name__ == "__main__":
