@@ -5,20 +5,19 @@ Day 00:
 https://adventofcode.com/2021/day/00
 """
 import sys
-from typing import Optional
 
 DAY = "00"
 Data = list[str]
 
-def parse_data(path: Optional[str]):
-    if not sys.stdin.isatty():
-        raw = sys.stdin.read()
+
+def parse_data() -> Data:
+    if len(sys.argv) >= 2:
+        path = sys.argv[1]
     else:
-        if path:
-            with open(path, encoding="utf-8") as f:
-                raw = f.read()
-        else:
-            sys.exit("No stdin data was recived.")
+        path = f"inputs/example_{DAY}.txt"
+
+    with open(path, encoding="utf-8") as f:
+        raw = f.read()
 
     data = raw
     return data
@@ -33,7 +32,7 @@ def part_2(data: Data):
 
 
 def main():
-    data = parse_data(f"inputs/example_{DAY}.txt")
+    data = parse_data()
 
     print(part_1(data))
     print(part_2(data))

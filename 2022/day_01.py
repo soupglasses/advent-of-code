@@ -5,22 +5,23 @@ Day 01:
 https://adventofcode.com/2022/day/1
 """
 import sys
-from typing import Optional
 
 DAY = "01"
 Data = list[list[int]]
 
-def parse_data(path: Optional[str]) -> Data:
-    if not sys.stdin.isatty():
-        raw = sys.stdin.read()
-    else:
-        if path:
-            with open(path, encoding="utf-8") as f:
-                raw = f.read()
-        else:
-            sys.exit("No stdin data was recived.")
 
-    data = [[int(line or "0") for line in lines.split('\n')] for lines in raw.split('\n\n')]
+def parse_data() -> Data:
+    if len(sys.argv) >= 2:
+        path = sys.argv[1]
+    else:
+        path = f"inputs/example_{DAY}.txt"
+
+    with open(path, encoding="utf-8") as f:
+        raw = f.read()
+
+    data = [
+        [int(line or "0") for line in lines.split("\n")] for lines in raw.split("\n\n")
+    ]
     return data
 
 
@@ -33,7 +34,7 @@ def part_2(data: Data):
 
 
 def main():
-    data = parse_data(f"inputs/example_{DAY}.txt")
+    data = parse_data()
 
     print(part_1(data))
     print(part_2(data))
