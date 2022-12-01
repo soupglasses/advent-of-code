@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """
-Day $:
+Day 01:
 
-https://adventofcode.com/2021/day/$
+https://adventofcode.com/2022/day/1
 """
 import sys
 from typing import Optional
 
+DAY = "01"
 Data = list[list[int]]
 
 def parse_data(path: Optional[str]) -> Data:
@@ -32,7 +33,7 @@ def part_2(data: Data):
 
 
 def main():
-    data = parse_data("inputs/example_$.txt")
+    data = parse_data(f"inputs/example_{DAY}.txt")
 
     print(part_1(data))
     print(part_2(data))
