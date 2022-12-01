@@ -11,7 +11,7 @@ def part_1(data)
 end
 
 def part_2(data)
-  data.sort.reverse.take(3).sum
+  data.sort.last(3).sum
 end
 
 puts part_1(sums_of_calories)
