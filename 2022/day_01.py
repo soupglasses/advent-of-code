@@ -7,7 +7,7 @@ https://adventofcode.com/2022/day/1
 import sys
 
 DAY = "01"
-Data = list[list[int]]
+Data = list[int]
 
 
 def parse_data() -> Data:
@@ -20,17 +20,18 @@ def parse_data() -> Data:
         raw = f.read()
 
     data = [
-        [int(line or "0") for line in lines.split("\n")] for lines in raw.split("\n\n")
+        sum(map(int, group.strip().split("\n")))
+        for group in raw.split("\n\n")
     ]
     return data
 
 
 def part_1(data: Data):
-    return max(sum(group) for group in data)
+    return max(data)
 
 
 def part_2(data: Data):
-    return sum(sorted((sum(group) for group in data), reverse=True)[:3])
+    return sum(sorted(data, reverse=True)[:3])
 
 
 def main():
