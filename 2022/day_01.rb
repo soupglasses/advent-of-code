@@ -2,17 +2,17 @@
 
 file = !ARGV.empty? ? ARGV[0] : "inputs/example_01.txt"
 
-data = File.read(file)
+sums_of_calories = File.read(file)
   .split("\n\n")
-  .map { _1.split.map(&:to_i) }
+  .map { _1.split.map(&:to_i).sum }
 
 def part_1(data)
-  data.map(&:sum).max
+  data.max
 end
 
 def part_2(data)
-  data.map(&:sum).sort.reverse.take(3).sum
+  data.sort.reverse.take(3).sum
 end
 
-puts part_1(data)
-puts part_2(data)
+puts part_1(sums_of_calories)
+puts part_2(sums_of_calories)
