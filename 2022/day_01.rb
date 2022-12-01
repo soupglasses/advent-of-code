@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-file = !ARGV.empty? ? ARGV[0] : "inputs/example_01.txt"
+file = !ARGV.empty? ? ARGV[0] : "#{__dir__}/inputs/example_01.txt"
 
 sums_of_calories = File.read(file)
   .split("\n\n")
