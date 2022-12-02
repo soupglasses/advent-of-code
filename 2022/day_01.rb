@@ -4,7 +4,7 @@ file = ARGV[0] || File.join(__dir__, "inputs", "example_01.txt")
 
 sums_of_calories = File.read(file)
   .split("\n\n")
-  .map { _1.split.map(&:to_i).sum }
+  .map { _1.strip.split("\n").map(&:to_i).sum }
   .sort
 
 def part_1(data)
