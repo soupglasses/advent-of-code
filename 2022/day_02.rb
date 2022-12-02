@@ -12,9 +12,9 @@ GAME = {
   "C Z" => [3 + 3, 1 + 6],
 }
 
-file = ARGV[0] || File.join(__dir__, "inputs", "example_02.txt")
+path = ARGV[0] || File.join(__dir__, "inputs", "example_02.txt")
 
-game_rounds = File.read(file).split("\n")
+game_rounds = File.read(path).split("\n")
 
 def part_1(data)
   data.map { GAME[_1][0] }.sum

@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-file = ARGV[0] || File.join(__dir__, "inputs", "example_01.txt")
+path = ARGV[0] || File.join(__dir__, "inputs", "example_01.txt")
 
-sums_of_calories = File.read(file)
+sums_of_calories = File.read(path)
   .split("\n\n")
   .map { _1.split("\n").map(&:to_i).sum }
 
