@@ -9,13 +9,13 @@ import sys
 DAY = "01"
 Data = list[int]
 
+if len(sys.argv) >= 2:
+    path = sys.argv[1]
+else:
+    path = f"inputs/example_{DAY}.txt"
+
 
 def parse_data() -> Data:
-    if len(sys.argv) >= 2:
-        path = sys.argv[1]
-    else:
-        path = f"inputs/example_{DAY}.txt"
-
     with open(path, encoding="utf-8") as f:
         raw = f.read()
 
