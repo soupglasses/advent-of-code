@@ -2,11 +2,10 @@
 
 path = ARGV[0] || File.join(__dir__, "inputs", "example_03.txt")
 
-rucksacks = File.read(path)
-  .split("\n")
+rucksacks = File.read(path).split("\n")
 
-def reduce_to_item_priority(sets)
-  (sets.reduce(&:intersection).first.ord + 20) % 58
+def reduce_to_item_priority(items)
+  (items.reduce(&:intersection).first.ord + 20) % 58
 end
 
 def part_1(data)
