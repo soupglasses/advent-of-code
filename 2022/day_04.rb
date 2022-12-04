@@ -8,7 +8,7 @@ camp_sections = File.foreach(path, chomp: true)
     .split(/,|-/)
     .map(&:to_i)
     .each_slice(2)
-    .map { Range.new(_1, _2) }
+    .map { _1.._2 }
 }
 
 def disjoint?(r1, r2)
