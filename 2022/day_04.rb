@@ -8,14 +8,10 @@ camp_sections = File.read(path)
   .split("\n")
   .map { |line|
   line
-    .split(",")
-    .map { |section|
-    section
-      .split("-")
-      .map(&:to_i)
-      .then { Range.new(_1, _2) }
-      .to_set
-  }
+    .split(/,|-/)
+    .map(&:to_i)
+    .each_slice(2)
+    .map { Range.new(_1, _2).to_set }
 }
 
 def part_1(data)
