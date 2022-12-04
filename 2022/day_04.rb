@@ -16,14 +16,14 @@ camp_sections = File.read(path)
 
 def part_1(data)
   data
-    .map { _1.subset?(_2) || _1.superset?(_2) }
-    .count(true)
+    .filter { _1.subset?(_2) || _1.superset?(_2) }
+    .count
 end
 
 def part_2(data)
   data
-    .map { _1.intersect? _2 }
-    .count(true)
+    .filter { _1.intersect?(_2) }
+    .count
 end
 
 puts part_1(camp_sections)
