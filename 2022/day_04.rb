@@ -2,9 +2,9 @@
 
 require 'set'
 
-path = ARGV[0] || File.join(__dir__, "inputs", "example_04.txt")
+PATH = ARGV[0] || File.join(__dir__, "inputs", "example_04.txt")
 
-camp_sections = File.foreach(path, chomp: true)
+camp_sections = File.foreach(PATH, chomp: true)
   .map { |line|
   line
     .split(/,|-/)

@@ -2,9 +2,9 @@
 
 require 'set'
 
-path = ARGV[0] || File.join(__dir__, "inputs", "example_03.txt")
+PATH = ARGV[0] || File.join(__dir__, "inputs", "example_03.txt")
 
-rucksacks = File.read(path).split("\n")
+rucksacks = File.read(PATH).split("\n")
 
 def reduce_to_item_priority(items)
   (items.reduce(&:intersection).first.ord + 20) % 58
