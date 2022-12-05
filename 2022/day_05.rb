@@ -40,7 +40,10 @@ def run_crane(crate_stacks, move_commands, strategy)
   stack = crate_stacks.map(&:clone)
 
   move_commands.each do |amount, from, to|
-    stack[to].concat(stack[from].pop(amount).send(strategy))
+    stack[from]
+      .pop(amount)
+      .send(strategy)
+      .then { stack[to].concat _1 }
   end
 
   stack.map(&:last).join
