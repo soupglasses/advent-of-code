@@ -9,7 +9,7 @@ MoveCommand = Struct.new(:amount, :from, :to)
 # @param raw_crate_stacks [String] The AoC, seperated by newlines.
 # @return [Array<Array<String>>] Array with zero-indexed crate-stacks.
 # @example Stack where stack 1 holds crate A and C, while stack 2 holds crate B.
-#   parse_raw_crate_stacks(" [C]     \n [A] [B] \n  1   2  ") #=> [["A", "C"], ["BC"]]
+#   parse_raw_crate_stacks(" [C]     \n [A] [B] \n  1   2  ") #=> [["A", "C"], ["B"]]
 def parse_raw_crate_stacks(raw_crate_stacks)
   raw_crate_stacks
     .split("\n")
