@@ -68,8 +68,7 @@ end
 
 
 def main()
-  raw_crate_stacks, raw_move_commands = File.read(PATH)
-    .split("\n\n")
+  raw_crate_stacks, raw_move_commands = File.read(PATH).split("\n\n")
 
   crate_stacks = parse_raw_crate_stacks(raw_crate_stacks)
   move_commands = parse_raw_move_commands(raw_move_commands)
