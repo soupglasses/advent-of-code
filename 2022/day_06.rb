@@ -9,7 +9,7 @@ def packet_offset_from_size(data, size)
     .each_char
     .each_cons(size)
     .find_index { _1.uniq.length == size }
-    .then { _1 + size }
+    &.then { _1 + size }
 end
 
 def part_1(data)
