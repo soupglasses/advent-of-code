@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'set'
-
 PATH = ARGV[0] || File.join(__dir__, "inputs", "example_06.txt")
 
 datastream = File.read(PATH).chomp
