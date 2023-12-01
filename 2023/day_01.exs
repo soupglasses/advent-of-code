@@ -3,13 +3,12 @@
 {:ok, re_num} = Regex.compile("(?=(\\d|one|two|three|four|five|six|seven|eight|nine))")
 nums = %{one: "1", two: "2", three: "3", four: "4", five: "5", six: "6", seven: "7", eight: "8", nine: "9"}
 
-number_to_digit = fn item ->
-    if String.match?(item, ~r/\d/) do
-      item
-    else
-      Map.fetch!(nums, String.to_atom(item))
-    end
+number_to_digit = fn
+  <<c>> when ?0 <= c and c <= ?9 -> c
+  item -> Map.fetch!(nums, String.to_atom(item))
 end
+
+# TODO: Rework this to work on strings directly.
 
 solver = fn data -> String.split(data, "\n", trim: true)
   |> Enum.map(fn line ->
