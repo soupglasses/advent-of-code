@@ -23,8 +23,8 @@ defmodule Day01 do
   end
 end
 
-part_1_data = File.read!("./inputs/example_01a.txt")
-part_2_data = File.read!("./inputs/example_01b.txt")
+part_1 = File.read!("./inputs/example_01_1.txt")
+part_2 = File.read!("./inputs/example_01_2.txt")
 
-IO.inspect Day01.solve(part_1_data)
-IO.inspect Day01.solve(part_2_data)
+IO.inspect(Day01.solve(part_1))
+IO.inspect(Day01.solve(part_2))
