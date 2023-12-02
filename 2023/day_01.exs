@@ -1,6 +1,18 @@
 #!/usr/bin/env elixir
 
 defmodule Day01 do
+  @moduledoc """
+  Day 1 - Trebuchet?!
+
+  Part 1:
+    Recover calibration values from a document by keeping the first and last
+    digit found in each line. Sum all the two-digit numbers.
+
+  Part 2:
+    Extends part 1 by also including the overlapping spelled-out digits as
+    possible valid digits.
+  """
+
   def parse(""), do: []
   def parse(<<c>>   <> rest) when c in ?0..?9, do: [c - ?0 | parse(rest)]
   def parse("zero"  <> rest), do: [0 | parse("o" <> rest)]
