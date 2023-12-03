@@ -1,5 +1,9 @@
 #!/usr/bin/env elixir
 
+Mix.install([
+  {:nimble_parsec, "~> 1.0"}
+])
+
 defmodule Day02 do
   @moduledoc """
   Day 2 - Cube Conundrum
@@ -14,47 +18,31 @@ defmodule Day02 do
     Find the product of these minimums for each game and sum them together.
   """
 
-  def parser(game_records) do
-    Map.new(
-      String.split(game_records, "\n", trim: true)
-      |> Enum.map(fn "Game " <> game ->
-        {id, ": " <> rest} = Integer.parse(game)
-
-        plays =
-          rest
-          |> String.split("; ")
-          |> Enum.map(fn cubes ->
-            String.split(cubes, ", ")
-            |> Map.new(fn cube ->
-              {amount, " " <> color} = Integer.parse(cube)
-              {color, amount}
-            end)
-          end)
-
-        {id, plays}
-      end)
-    )
-  end
-
   def part1(games) do
-    Map.filter(games, fn {_, game} ->
-      Enum.all?(game, fn hand ->
-        Map.get(hand, "red", 0) <= 12 &&
-          Map.get(hand, "green", 0) <= 13 &&
-          Map.get(hand, "blue", 0) <= 14
+    {:ok, parsed, _, _, _, _} = Day02.Parser.from_string(games)
+
+    Enum.filter(parsed, fn {:game, game} ->
+      Keyword.get_values(game, :round)
+      |> Enum.all?(fn round ->
+        Keyword.get(round, :red, 0) <= 12 &&
+          Keyword.get(round, :green, 0) <= 13 &&
+          Keyword.get(round, :blue, 0) <= 14
       end)
     end)
-    |> Map.keys()
+    |> Enum.map(fn {:game, game} -> Keyword.get(game, :id) end)
     |> Enum.sum()
   end
 
   def part2(games) do
-    Enum.map(games, fn {_, game} ->
-      Enum.reduce(game, [0, 0, 0], fn item, acc ->
+    {:ok, parsed, _, _, _, _} = Day02.Parser.from_string(games)
+
+    Enum.map(parsed, fn {:game, game} ->
+      Keyword.get_values(game, :round)
+      |> Enum.reduce([0, 0, 0], fn item, acc ->
         [
-          max(Map.get(item, "red", 0), Enum.at(acc, 0)),
-          max(Map.get(item, "green", 0), Enum.at(acc, 1)),
-          max(Map.get(item, "blue", 0), Enum.at(acc, 2))
+          max(Keyword.get(item, :red, 0), Enum.at(acc, 0)),
+          max(Keyword.get(item, :green, 0), Enum.at(acc, 1)),
+          max(Keyword.get(item, :blue, 0), Enum.at(acc, 2))
         ]
       end)
       |> Enum.product()
@@ -63,8 +51,47 @@ defmodule Day02 do
   end
 end
 
-game_records_data = File.read!("inputs/example_02.txt")
-games = Day02.parser(game_records_data)
+defmodule Day02.Parser do
+  import NimbleParsec
 
-IO.inspect(Day02.part1(games))
-IO.inspect(Day02.part2(games))
+  hand = fn color ->
+    integer(min: 1)
+    |> ignore(string(" "))
+    |> ignore(string(color))
+    |> unwrap_and_tag(String.to_atom(color))
+  end
+
+  round =
+    times(
+      concat(
+        choice([hand.("red"), hand.("green"), hand.("blue")]),
+        ignore(optional(string(", ")))
+      ),
+      min: 1
+    )
+    |> ignore(optional(string("; ")))
+    |> tag(:round)
+
+  game =
+    ignore(string("Game "))
+    |> integer(min: 1)
+    |> unwrap_and_tag(:id)
+    |> ignore(string(": "))
+    |> times(round, min: 1)
+    |> tag(:game)
+
+  games =
+    repeat(
+      concat(
+        game,
+        ignore(optional(string("\n")))
+      )
+    )
+
+  defparsec(:from_string, games)
+end
+
+game_records_data = File.read!("inputs/example_02.txt")
+
+IO.inspect(Day02.part1(game_records_data))
+IO.inspect(Day02.part2(game_records_data))
