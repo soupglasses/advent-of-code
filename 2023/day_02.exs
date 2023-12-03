@@ -57,7 +57,7 @@ defmodule Day02 do
           max(Map.get(item, "blue", 0), Enum.at(acc, 2))
         ]
       end)
-      |> Enum.reduce(&*/2)
+      |> Enum.product()
     end)
     |> Enum.sum()
   end
