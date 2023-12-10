@@ -19,7 +19,7 @@ defmodule Day02 do
   """
 
   def part1(games) do
-    {:ok, parsed, _, _, _, _} = Day02.Parser.from_string(games)
+    {:ok, parsed, "", _, _, _} = Day02.Parser.from_string(games)
 
     Enum.filter(parsed, fn {:game, game} ->
       Keyword.get_values(game, :round)
@@ -34,7 +34,7 @@ defmodule Day02 do
   end
 
   def part2(games) do
-    {:ok, parsed, _, _, _, _} = Day02.Parser.from_string(games)
+    {:ok, parsed, "", _, _, _} = Day02.Parser.from_string(games)
 
     Enum.map(parsed, fn {:game, game} ->
       Keyword.get_values(game, :round)
