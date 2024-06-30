@@ -1,0 +1,10 @@
+LR
+
+AAA = (BBB, XXX)
+BBB = (XXX, ZZZ)
+ZZZ = (BBB, XXX)
+22A = (22B, XXX)
+22B = (22C, 22C)
+22C = (22Z, 22Z)
+22Z = (22B, 22B)
+XXX = (XXX, XXX)
