@@ -31,6 +31,6 @@ def part2(directions : Directions, table : Table) : UInt64
     .reduce(1_u64) { |acc, count| acc.lcm(count) }
 end
 
-directions, table = parse(File.read_lines("../inputs/input_08.txt"))
+directions, table = parse(File.read_lines("../inputs/example_08.txt"))
 puts part1(directions, table)
 puts part2(directions, table)
