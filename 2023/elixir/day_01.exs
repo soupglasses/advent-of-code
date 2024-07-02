@@ -42,8 +42,8 @@ defmodule Day01 do
   def part2(document), do: recalibrate_by(&parse_both/1, document)
 end
 
-part_1_document = File.read!("./inputs/example_01_1.txt")
-part_2_document = File.read!("./inputs/example_01_2.txt")
+part_1_document = File.read!("../inputs/example_01_1.txt")
+part_2_document = File.read!("../inputs/example_01_2.txt")
 
 IO.inspect(Day01.part1(part_1_document))
 IO.inspect(Day01.part2(part_2_document))

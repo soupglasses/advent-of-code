@@ -91,7 +91,7 @@ defmodule Day02.Parser do
   defparsec(:from_string, games)
 end
 
-game_records_data = File.read!("inputs/example_02.txt")
+game_records_data = File.read!("../inputs/example_02.txt")
 
 IO.inspect(Day02.part1(game_records_data))
 IO.inspect(Day02.part2(game_records_data))
