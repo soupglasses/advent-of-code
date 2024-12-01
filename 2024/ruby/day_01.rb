@@ -4,7 +4,9 @@ require_relative 'aocday'
 
 class Day01 < AoCDay
   def initialize(data)
-    @lists = data.split("\n").map { _1.split.map(&:to_i) }
+    @lists = data
+      .scan(/(\d+)\s+(\d+)/)
+      .map { |left, right| [left.to_i, right.to_i] }
   end
 
   def part1
@@ -17,7 +19,7 @@ class Day01 < AoCDay
     @lists
       .transpose
       .map(&:tally)
-      .reduce { |left, right|  left.sum { |number, count| number * count * right[number].to_i } }
+      .reduce { |left, right|  left.sum { |number, count| number * count * right.fetch(number, 0) } }
   end
 end
 
