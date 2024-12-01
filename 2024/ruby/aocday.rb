@@ -24,13 +24,15 @@ class AoCDay
     self.load_dynamic_file(:input, nil)
   end
 
-  def self.cli
-    if ENV.fetch("AOC_ATTEMPT", "false") == "true"
-      day = input_file
-    else
-      day = example_file
+  def self.run_if_main
+    if caller.none? { |line| line.include? 'require' }
+      if %w{true yes y 1 on}.include? ENV["AOC_ATTEMPT"]
+        day = input_file
+      else
+        day = example_file
+      end
+      puts day.part1
+      puts day.part2
     end
-    puts day.part1
-    puts day.part2
   end
 end

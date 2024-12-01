@@ -23,4 +23,4 @@ class Day01 < AoCDay
   end
 end
 
-Day01.cli
+Day01.run_if_main
