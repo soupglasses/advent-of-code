@@ -1,8 +1,14 @@
 #!/usr/bin/env ruby
 
-class Day09
-  def initialize(input)
-    @points = input.split("\n").map { |line| line.split.map(&:to_i) }
+require_relative '../../aocday'
+
+class Day09 < AoCDay
+  def setup(input)
+    @points = input.split("\n").map(&method(:parse))
+  end
+
+  def parse(line)
+    line.split.map(&:to_i)
   end
 
   def derivative_from_differences(points)
@@ -34,6 +40,4 @@ class Day09
   end
 end
 
-answer = Day02.new(File.open("2023/inputs/example_09.txt").read)
-puts answer.part1
-puts answer.part2
+Day09.run_if_main

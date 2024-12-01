@@ -1,19 +1,21 @@
 #!/usr/bin/env ruby
 
-class Day01
+require_relative '../../aocday'
+
+class Day01 < AoCDay
   WORD_TO_INTEGER = {
-    "zero" => 0, "one" => 1, "two" => 2, "three" => 3,
-    "four" => 4, "five" => 5, "six" => 6, "seven" => 7,
-    "eight" => 8, "nine" => 9,
+    'zero' => 0, 'one' => 1, 'two' => 2, 'three' => 3,
+    'four' => 4, 'five' => 5, 'six' => 6, 'seven' => 7,
+    'eight' => 8, 'nine' => 9,
   }
 
-  def initialize(data)
+  def setup(data)
     @lines = data.split("\n")
   end
 
   def extract_calibration_value_v1(line)
     line
-      .gsub(/\D/, "")
+      .gsub(/\D/, '')
       .chars.values_at(0, -1)
       .join.to_i
   end
@@ -41,7 +43,4 @@ class Day01
   end
 end
 
-answer = Day01.new(File.open("2023/inputs/example_01_1.txt").read)
-puts answer.part1
-answer = Day01.new(File.open("2023/inputs/example_01_2.txt").read)
-puts answer.part2
+Day01.run_if_main

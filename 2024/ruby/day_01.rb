@@ -1,10 +1,12 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-require_relative 'aocday'
+require_relative '../../aocday'
 
 class Day01 < AoCDay
-  def initialize(data)
-    @lists = data
+  def setup(data)
+    @lists =
+      data
       .scan(/(\d+)\s+(\d+)/)
       .map { |left, right| [left.to_i, right.to_i] }
   end
@@ -12,14 +14,16 @@ class Day01 < AoCDay
   def part1
     @lists
       .transpose.map(&:sort).transpose
-      .map { (_2 - _1).abs }.sum
+      .sum { (_2 - _1).abs }
   end
 
   def part2
     @lists
       .transpose
       .map(&:tally)
-      .reduce { |left, right|  left.sum { |number, count| number * count * right.fetch(number, 0) } }
+      .reduce do |left_col, right_col|
+        left_col.sum { |number, count| number * count * right_col.fetch(number, 0) }
+      end
   end
 end
 
