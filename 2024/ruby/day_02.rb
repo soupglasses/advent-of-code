@@ -14,8 +14,7 @@ class Day02 < AoCDay
 
     report
       .each_cons(2)
-      .map { _2 - _1 }
-      .all? { _1.abs.between?(1, 3) }
+      .all? { (_2 - _1).abs.between?(1, 3) }
   end
 
   def part1
