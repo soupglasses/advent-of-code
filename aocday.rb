@@ -60,7 +60,7 @@ class AoCDay
   end
 
   def self.finalize
-    run if caller.last.match?(%r{/day_\d\d\.rb:})
+    run if caller.last.include?("/day_#{day}.rb:")
   end
 
   def self.inherited(base)
