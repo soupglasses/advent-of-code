@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'pathname'
-require_relative 'std++'
 
 # AoCDay is a base class designed for handling Advent of Code (AoC) challenges.
 # It abstracts the process of loading input and example data, and provides
