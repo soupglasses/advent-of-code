@@ -10,8 +10,11 @@ class Day02 < AoCDay
   end
 
   def reactor_safety(report)
-    changes = report.each_cons(2).map { _2 - _1 }
-    changes.all? { _1.abs.between(1, 3) } && changes.monotonic?
+    return false unless report.monotonic?
+    report
+      .each_cons(2)
+      .map { _2 - _1 }
+      .all? { _1.abs.between?(1, 3) }
   end
 
   def part1
