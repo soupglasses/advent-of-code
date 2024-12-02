@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'pathname'
+require_relative 'std++'
 
 # AoCDay is a base class designed for handling Advent of Code (AoC) challenges.
 # It abstracts the process of loading input and example data, and provides
@@ -11,8 +12,8 @@ class AoCDay
     name[/\d+/]
   end
 
-  def initialize(data)
-    setup data
+  def initialize(data = nil)
+    setup data if data
   end
 
   def setup(data)
@@ -20,12 +21,12 @@ class AoCDay
   end
 
   def self.new_from_dynamic_file(type, nth)
-    file_name = "#{type}_#{day}#{nth ? "_#{nth}" : ''}.txt"
-    caller_path = caller.last.split(':').first
+    input_file_name = "#{type}_#{day}#{nth ? "_#{nth}" : ''}.txt"
+    source_location = new.method(:setup).source_location.first
     new(
-      Pathname.new(caller_path)
+      Pathname.new(source_location)
         .dirname
-        .join('../inputs', file_name)
+        .join('../inputs', input_file_name)
         .read
     )
   end
@@ -38,9 +39,7 @@ class AoCDay
     new_from_dynamic_file(:input, nil)
   end
 
-  def self.run_if_main
-    return if caller.any? { |line| line.include?('require') }
-
+  def self.run
     day_part2 = nil
 
     if %w[true yes y 1 on].include? ENV['AOC_ATTEMPT']
@@ -58,5 +57,20 @@ class AoCDay
 
     puts day.part1
     puts day_part2.part2
+  end
+
+  def self.finalize
+    return unless caller.last.match?(%r{/day_\d\d\.rb:})
+
+    run
+  end
+
+  def self.inherited(base)
+    TracePoint.trace(:end) do |t|
+      if base == t.self
+        base.finalize
+        t.disable
+      end
+    end
   end
 end

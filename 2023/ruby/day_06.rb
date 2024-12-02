@@ -41,5 +41,3 @@ class Day06 < AoCDay
     total_faster_solutions(time, distance)
   end
 end
-
-Day06.run_if_main

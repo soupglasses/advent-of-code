@@ -42,5 +42,3 @@ class Day01 < AoCDay
     WORD_TO_INTEGER[string] || string.to_i
   end
 end
-
-Day01.run_if_main

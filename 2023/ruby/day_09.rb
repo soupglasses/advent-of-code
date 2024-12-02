@@ -39,5 +39,3 @@ class Day09 < AoCDay
     @points.map { |history| prev_in_sequence(history) }.sum
   end
 end
-
-Day09.run_if_main

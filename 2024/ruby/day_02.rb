@@ -18,12 +18,10 @@ class Day02 < AoCDay
   end
 
   def part1
-    @reports.count { reactor_safety(_1) }
+    @reports.count { reactor_safety _1 }
   end
 
   def part2
-    @reports.count { _1.combination(_1.length - 1).any?(&method(:reactor_safety)) }
+    @reports.count { |report| report.combination(report.length - 1).any? { reactor_safety _1 } }
   end
 end
-
-Day02.run_if_main

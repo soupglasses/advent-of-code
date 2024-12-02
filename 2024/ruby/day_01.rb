@@ -26,5 +26,3 @@ class Day01 < AoCDay
       end
   end
 end
-
-Day01.run_if_main

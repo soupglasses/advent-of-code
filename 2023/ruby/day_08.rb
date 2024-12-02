@@ -35,5 +35,3 @@ class Day08 < AoCDay
       .reduce(&:lcm)
   end
 end
-
-Day08.run_if_main
