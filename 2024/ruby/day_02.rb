@@ -11,6 +11,7 @@ class Day02 < AoCDay
 
   def reactor_safety(report)
     return false unless report.monotonic?
+
     report
       .each_cons(2)
       .map { _2 - _1 }
