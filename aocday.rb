@@ -59,9 +59,7 @@ class AoCDay
   end
 
   def self.finalize
-    return unless caller.last.match?(%r{/day_\d\d\.rb:})
-
-    run
+    run if caller.last.match?(%r{/day_\d\d\.rb:})
   end
 
   def self.inherited(base)
