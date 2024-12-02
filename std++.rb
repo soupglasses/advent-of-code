@@ -15,7 +15,7 @@ module Enumerable
     each_cons(2) do |a, b|
       d = b <=> a
       dir = d if dir.zero?
-      return false if dir != d unless dir.zero?
+      return false if dir != d unless d.zero?
     end
     true
   end
