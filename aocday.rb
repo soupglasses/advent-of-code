@@ -55,8 +55,8 @@ class AoCDay
 
     day_part2 ||= day
 
-    puts day.part1
-    puts day_part2.part2
+    p day.part1
+    p day_part2.part2
   end
 
   def self.finalize
