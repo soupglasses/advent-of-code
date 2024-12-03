@@ -8,17 +8,15 @@ class Day03 < AoCDay
     @data = data
   end
 
-  def sum_uncorrupted_mults(data)
-    data
+  def part1
+    @data
       .scan(/mul\((\d{1,3}),(\d{1,3})\)/)
       .sum { _1.to_i * _2.to_i }
   end
 
-  def part1
-    sum_uncorrupted_mults @data
-  end
-
   def part2
-    sum_uncorrupted_mults @data.gsub(/don't\(\).*?(?:do\(\)|\Z)/m, "")
+    @data
+      .scan(/(?:don't\(\).*?do\(\))|mul\((\d{1,3}),(\d{1,3})\)/m)
+      .sum { _1.to_i * _2.to_i }
   end
 end
