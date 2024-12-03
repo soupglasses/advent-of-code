@@ -16,7 +16,7 @@ class Day03 < AoCDay
 
   def part2
     @data
-      .scan(/(?:don't\(\).*?do\(\))|mul\((\d{1,3}),(\d{1,3})\)/m)
+      .scan(/(?:don't\(\).*?(?:do\(\)|\z))|mul\((\d{1,3}),(\d{1,3})\)/m)
       .sum { _1.to_i * _2.to_i }
   end
 end
