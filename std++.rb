@@ -15,11 +15,21 @@ module Enumerable
     each_cons(2) do |a, b|
       d = b <=> a
       dir = d if dir.zero?
-      return false if dir != d unless d.zero?
+      return false if !d.zero? && dir != d
     end
     true
   end
 
+  # Divides the enumerable into three parts: elements before, current element, and elements after.
+  # Yields each partition to the block.
+  #
+  # @example
+  #   [1,2,3].partitions.to_a  #=> [[[], 1, [2, 3]], [[1], 2, [3]], [[1, 2], 3, []]]
+  #
+  # @yieldparam left [Array] The elements before the current element.
+  # @yieldparam current [Object] The current element.
+  # @yieldparam right [Array] The elements after the current element.
+  # @return [Enumerator] if no block is given.
   def partitions
     return enum_for(:partitions) unless block_given?
 
@@ -32,8 +42,15 @@ module Enumerable
 end
 
 class Array
+  # Returns the middle element(s) of the array.
+  # If the array has an odd size, returns an array with one element.
+  # If the array has an even size, returns an array with two elements.
+  # If the array is empty, returns itself.
+  #
+  # @return [Array] the middle element(s).
   def middle
-    return nil if empty?
-    size.odd? ? self[size / 2] : self[(size / 2) - 1, 2]
+    return self if empty?
+
+    size.odd? ? self[size / 2, 1] : self[(size / 2) - 1, 2]
   end
 end
