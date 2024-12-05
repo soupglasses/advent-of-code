@@ -30,10 +30,10 @@ class Day05 < AoCDay
   end
 
   def part1
-    @updates.select { valid? _1 }.sum(&:middle)
+    @updates.select { valid? _1 }.sum { _1.middle.first }
   end
 
   def part2
-    @updates.reject { valid? _1 }.map { sort _1 }.sum(&:middle)
+    @updates.reject { valid? _1 }.sum { (sort _1).middle.first }
   end
 end
