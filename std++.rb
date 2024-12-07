@@ -34,10 +34,20 @@ module Enumerable
     return enum_for(:partitions) unless block_given?
 
     each_with_index do |current, index|
-      left = take(index)
-      right = drop(index + 1)
+      left = lazy.take(index)
+      right = lazy.drop(index + 1)
       yield [left, current, right]
     end
+  end
+end
+
+class Integer
+  def length
+    Math.log10(self).floor + 1
+  end
+
+  def end_with?(other)
+    return (self - other) % 10 ** other.length == 0
   end
 end
 
