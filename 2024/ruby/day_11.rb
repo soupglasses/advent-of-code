@@ -10,7 +10,7 @@ class Day11 < AoCDay
   end
 
   def blink(item, blinks_left)
-    (@blink_memo ||= {})[[item, blinks_left]] ||= begin
+    ((@blink_memo ||= {})[item] ||= {})[blinks_left] ||= begin
       return 1 if blinks_left.zero?
       return blink(1, blinks_left - 1) if item.zero?
 
